@@ -20,80 +20,7 @@
 <div id="sakura-container" class="fixed top-0 left-0 w-full h-full pointer-events-none z-50"></div>
 
 <body class="bg-gray-50">
-
-    <header x-data="{ open: false }"
-        class="fixed top-0 left-0 w-full bg-purple-950/100 text-white backdrop-blur shadow-sm shadow-black/50 z-50">
-
-        <div class="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
-
-            <!-- Logo + App Name -->
-            <div class="flex items-center gap-3">
-                <img src="{{ asset('images/landingpage/logo.png') }}" class="h-10 w-auto" alt="Logo">
-                <span class="text-lg font-semibold">
-                    LKP Unsada
-                </span>
-            </div>
-
-            <!-- Navigation Tengah -->
-            <nav class="hidden md:flex items-center gap-8 font-medium">
-                <a href="#" class="hover:text-purple-200">Beranda</a>
-                <a href="#" class="hover:text-purple-200">Program</a>
-                <a href="#" class="hover:text-purple-200">Fakultas</a>
-                <a href="#" class="hover:text-purple-200">Pengajar</a>
-                <a href="#" class="hover:text-purple-200">Blog</a>
-            </nav>
-
-            <!-- Right Menu -->
-            <div class="hidden md:flex items-center gap-4">
-                <!-- Social Media Icons -->
-                <!-- Social Media -->
-                <a href="{{ url('https://www.instagram.com/lpk_unsada?igsh=OTV6NG9oNW5pNWI5') }}"
-                    class="hover:text-purple-300"> <!-- Instagram --> <svg xmlns="http://www.w3.org/2000/svg"
-                        class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-                        <path
-                            d="M7.75 2h8.5A5.75 5.75 0 0122 7.75v8.5A5.75 5.75 0 0116.25 22h-8.5A5.75 5.75 0 012 16.25v-8.5A5.75 5.75 0 017.75 2zm8.5 1.5h-8.5A4.25 4.25 0 003.5 7.75v8.5A4.25 4.25 0 007.75 20.5h8.5a4.25 4.25 0 004.25-4.25v-8.5A4.25 4.25 0 0016.25 3.5zM12 7a5 5 0 110 10 5 5 0 010-10zm0 1.5A3.5 3.5 0 1015.5 12 3.5 3.5 0 0012 8.5zm4.88-2.38a1.13 1.13 0 11-2.25 0 1.13 1.13 0 012.25 0z" />
-                    </svg> </a> <!-- Youtube --> <a href="#" class="hover:text-purple-300"> <svg
-                        xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-                        <path
-                            d="M23.5 6.2s-.2-1.7-.9-2.5c-.9-1-1.9-1-2.4-1.1C16.8 2.3 12 2.3 12 2.3h0s-4.8 0-8.2.3c-.5.1-1.5.1-2.4 1.1C.7 4.5.5 6.2.5 6.2S.2 8.2.2 10.2v1.6c0 2 .3 4 .3 4s.2 1.7.9 2.5c.9 1 2 1 2.5 1.1 1.8.2 7.6.3 7.6.3s4.8 0 8.2-.3c.5-.1 1.5-.1 2.4-1.1.7-.8.9-2.5.9-2.5s.3-2 .3-4v-1.6c0-2-.3-4-.3-4zM9.8 14.6V7.9l6.5 3.3-6.5 3.4z" />
-                    </svg> <!-- Facebook -->
-                    <a href="#" class="hover:text-purple-300">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-                            <path
-                                d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.988h-2.54v-2.89h2.54V9.797c0-2.507 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562v1.875h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" />
-                        </svg>
-                    </a>
-
-                    <!-- Login Button -->
-                    @guest
-                        <a href="{{ route('login') }}"
-                            class="bg-white text-purple-800 px-4 py-1.5 rounded-md font-medium hover:bg-purple-100">
-                            Login
-                        </a>
-                    @endguest
-            </div>
-
-            <!-- Hamburger -->
-            <button @click="open=!open" class="md:hidden">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-            </button>
-
-        </div>
-
-        <!-- Mobile Menu -->
-        <div x-show="open" x-transition class="md:hidden px-6 pb-6 space-y-4">
-            <a href="#" class="block">Beranda</a>
-            <a href="#" class="block">Program</a>
-            <a href="#" class="block">Fakultas</a>
-            <a href="#" class="block">Pengajar</a>
-            <a href="#" class="block">Blog</a>
-            <a href="{{ route('login') }}"
-                class="block bg-white text-purple-800 px-4 py-2 rounded-md text-center">Login</a>
-        </div>
-    </header>
+    @include('layouts.header')
     <!-- HERO SECTION -->
     <section x-data="heroSlider()" x-init="start()"
         class="relative h-[100vh] flex items-center justify-center text-white text-center overflow-hidden">
@@ -147,26 +74,22 @@
             <!-- Konten Teks Kanan -->
             <div class="md:w-2/3 flex flex-col justify-center text-center md:text-left">
                 <h2 class="text-4xl font-extrabold text-gray-800 mb-6">Tentang Kami</h2>
-                <p class="text-gray-600 mb-8 leading-relaxed text-lg break-words">
-                    Era globalisasi yang didukung dengan terbentuknya APEC dan
-                    AFTA mengharuskan semua negara mempersiapkan diri untuk
-                    menghadapi persaingan serta kerja sama dalam bidang
-                    perdagangan internasional dan pengembangan hubungan
-                    antarnegara. Kondisi tersebut membutuhkan peningkatan
-                    keterampilan staf dalam hubungan luar negeri
-                    Faktor utama yang sangat penting sebagai sarana mengikuti
-                    perkembangan tersebut adalah pengetahuan kemampuan
-                    berkomunikasi
-                    Dalam kaitan tersebut, LPK UNSADA di bawah pembinaan
-                    Universitas Darma Persada yang didirikan pada tanggal 6 Juli
-                    1986 ikut membantu meningkatkan kemampuan keterampilan
-                    berbahasa asing khususnya bahasa Asia Timur (Jepang,
-                    Cina/Mandarin). Di samping itu, LPK UNSADA memberikan
-                    pelayanan kursus Bahasa Indonesia sebagai Bahasa Asing,
-                    kursus Bahasa Inggris, kursus Aplikasi Komputer dan pelayanan
-                    Jasa Penerjamahan
-                </p>
+                <p class="text-gray-600 mb-8 leading-relaxed text-lg break-words text-justify">
+                    Era globalisasi yang didukung dengan terbentuknya APEC dan AFTA mengharuskan semua negara
+                    mempersiapkan diri untuk menghadapi persaingan serta kerja sama dalam bidang perdagangan
+                    internasional dan pengembangan hubungan antarnegara. Kondisi tersebut membutuhkan peningkatan
+                    keterampilan staf dalam hubungan luar negeri.
 
+                    Faktor utama yang sangat penting sebagai sarana mengikuti perkembangan tersebut adalah
+                    pengetahuan dan kemampuan berkomunikasi.
+
+                    Dalam kaitan tersebut, LPK UNSADA di bawah pembinaan Universitas Darma Persada yang didirikan
+                    pada tanggal 6 Juli 1986 ikut membantu meningkatkan kemampuan keterampilan berbahasa asing
+                    khususnya bahasa Asia Timur (Jepang dan Cina/Mandarin).
+
+                    Di samping itu, LPK UNSADA memberikan pelayanan kursus Bahasa Indonesia sebagai Bahasa Asing,
+                    kursus Bahasa Inggris, kursus Aplikasi Komputer, dan pelayanan jasa penerjemahan.
+                </p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
                     <a href="{{ url('https://drive.google.com/file/d/114xvaIUdO3PbeOfk2N9PGlvS2R2dwpkJ/view?usp=drive_link') }}"
                         target="_blank"
@@ -199,59 +122,108 @@
 
             <!-- Grid 4 Card -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-
                 <!-- Card 1 -->
                 <div
-                    class="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition duration-300 flex flex-col items-center text-center">
-                    <div class="w-16 h-16 flex items-center justify-center bg-indigo-100 rounded-full shadow-md mb-4">
-                        <i class="fas fa-language text-indigo-600 text-2xl"></i>
+                    class="bg-white p-7 rounded-2xl shadow-lg hover:shadow-2xl transition duration-300 border border-gray-100 group">
+
+                    <div class="flex flex-col items-center text-center">
+
+                        <div
+                            class="w-16 h-16 flex items-center justify-center bg-indigo-100 rounded-full shadow-md mb-5 group-hover:bg-indigo-600 transition">
+                            <i class="fas fa-language text-indigo-600 text-2xl group-hover:text-white transition"></i>
+                        </div>
+
+                        <h3 class="text-xl font-bold mb-3 text-gray-800">
+                            Pelatihan Bahasa
+                        </h3>
+
+                        <p class="text-gray-600 leading-relaxed text-sm sm:text-base text-center">
+                            LKP Unsada menyelenggarakan pelatihan bahasa Inggris, Jepang, Mandarin,
+                            dan Indonesia (BIPA) untuk meningkatkan kemampuan komunikasi dan
+                            profesionalisme peserta.
+                        </p>
+
                     </div>
-                    <h3 class="text-xl font-bold mb-3 text-gray-800">Pelatihan Bahasa</h3>
-                    <p class="text-gray-600 leading-relaxed text-sm sm:text-base">
-                        LKP Unsada menyelenggarakan pelatihan bahasa Inggris, Jepang, Mandarin, dan Indonesia (BIPA)
-                        untuk meningkatkan kemampuan komunikasi dan profesionalisme peserta.
-                    </p>
+
                 </div>
+
 
                 <!-- Card 2 -->
                 <div
-                    class="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition duration-300 flex flex-col items-center text-center">
-                    <div class="w-16 h-16 flex items-center justify-center bg-indigo-100 rounded-full shadow-md mb-4">
-                        <i class="fas fa-chalkboard-teacher text-indigo-600 text-2xl"></i>
+                    class="bg-white p-7 rounded-2xl shadow-lg hover:shadow-2xl transition duration-300 border border-gray-100 group">
+
+                    <div class="flex flex-col items-center text-center">
+
+                        <div
+                            class="w-16 h-16 flex items-center justify-center bg-indigo-100 rounded-full shadow-md mb-5 group-hover:bg-indigo-600 transition">
+                            <i
+                                class="fas fa-chalkboard-teacher text-indigo-600 text-2xl group-hover:text-white transition"></i>
+                        </div>
+
+                        <h3 class="text-xl font-bold mb-3 text-gray-800">
+                            Kelas Intensive
+                        </h3>
+
+                        <p class="text-gray-600 leading-relaxed text-sm sm:text-base text-center">
+                            Kelas Intensive JLPT, HSK, TEFL, dan TOEIC untuk meningkatkan
+                            kemampuan bahasa serta mempersiapkan peserta menghadapi
+                            sertifikasi profesional.
+                        </p>
+
                     </div>
-                    <h3 class="text-xl font-bold mb-3 text-gray-800">Kelas Intensive</h3>
-                    <p class="text-gray-600 leading-relaxed text-sm sm:text-base">
-                        Kelas Intensive JLPT, HSK, TEFL, dan TOEIC untuk meningkatkan kemampuan bahasa dan persiapan
-                        sertifikasi profesional peserta.
-                    </p>
+
                 </div>
+
 
                 <!-- Card 3 -->
                 <div
-                    class="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition duration-300 flex flex-col items-center text-center">
-                    <div class="w-16 h-16 flex items-center justify-center bg-indigo-100 rounded-full shadow-md mb-4">
-                        <i class="fas fa-certificate text-indigo-600 text-2xl"></i>
+                    class="bg-white p-7 rounded-2xl shadow-lg hover:shadow-2xl transition duration-300 border border-gray-100 group">
+
+                    <div class="flex flex-col items-center text-center">
+
+                        <div
+                            class="w-16 h-16 flex items-center justify-center bg-indigo-100 rounded-full shadow-md mb-5 group-hover:bg-indigo-600 transition">
+                            <i
+                                class="fas fa-certificate text-indigo-600 text-2xl group-hover:text-white transition"></i>
+                        </div>
+
+                        <h3 class="text-xl font-bold mb-3 text-gray-800">
+                            Sertifikasi
+                        </h3>
+
+                        <p class="text-gray-600 leading-relaxed text-sm sm:text-base text-center">
+                            Menyediakan berbagai sertifikasi seperti BNSP, Gelar Non-Akademik,
+                            dan Brevet A&B untuk meningkatkan kompetensi dan profesionalisme
+                            peserta di dunia kerja.
+                        </p>
+
                     </div>
-                    <h3 class="text-xl font-bold mb-3 text-gray-800">Sertifikasi</h3>
-                    <p class="text-gray-600 leading-relaxed text-sm sm:text-base">
-                        Menyediakan sertifikasi BNSP, Gelar Non-Akademik, dan BRIVET A&B untuk meningkatkan kompetensi
-                        dan profesionalisme peserta.
-                    </p>
+
                 </div>
+
 
                 <!-- Card 4 -->
                 <div
-                    class="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition duration-300 flex flex-col items-center text-center">
-                    <div class="w-16 h-16 flex items-center justify-center bg-indigo-100 rounded-full shadow-md mb-4">
-                        <i class="fas fa-globe text-indigo-600 text-2xl"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3 text-gray-800">Cultural Immersion</h3>
-                    <p class="text-gray-600 leading-relaxed text-sm sm:text-base">
-                        LKP Unsada menghadirkan Indonesian Language & Cultural Immersion Program untuk mempelajari
-                        bahasa Indonesia sekaligus mengenal budaya secara langsung.
-                    </p>
-                </div>
+                    class="bg-white p-7 rounded-2xl shadow-lg hover:shadow-2xl transition duration-300 border border-gray-100 group">
 
+                    <div class="flex flex-col items-center text-center">
+
+                        <div
+                            class="w-16 h-16 flex items-center justify-center bg-indigo-100 rounded-full shadow-md mb-5 group-hover:bg-indigo-600 transition">
+                            <i class="fas fa-globe text-indigo-600 text-2xl group-hover:text-white transition"></i>
+                        </div>
+
+                        <h3 class="text-xl font-bold mb-3 text-gray-800">
+                            Cultural Immersion
+                        </h3>
+
+                        <p class="text-gray-600 leading-relaxed text-sm sm:text-base text-center">
+                            Program Indonesian Language & Cultural Immersion memberikan
+                            pengalaman belajar bahasa Indonesia sekaligus mengenal
+                            budaya lokal secara langsung.
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -388,162 +360,47 @@
                 <!-- SLIDER -->
                 <div id="testimonialSlider" class="flex transition-transform duration-500">
 
-                    <!-- CARD -->
-                    <div class="basis-full sm:basis-1/2 lg:basis-1/3 flex-shrink-0 px-4">
-                        <div class="bg-white rounded-2xl shadow-lg p-8 h-full">
+                    @foreach ($testimonials as $item)
+                        <div class="basis-full sm:basis-1/2 lg:basis-1/3 flex-shrink-0 px-4">
 
-                            <div class="text-gray-300 text-5xl mb-4">“</div>
+                            <div
+                                class="bg-white rounded-2xl shadow-lg p-8 h-full hover:shadow-2xl transition duration-300">
 
-                            <p class="text-gray-600 text-sm mb-8">
-                                Mengikuti pelatihan di LPK UNSADA benar-benar membuka wawasan saya.
-                            </p>
-
-                            <div class="-mx-8 border-t mb-4"></div>
-
-                            <div class="flex items-center gap-3">
-                                <img src="https://i.pravatar.cc/60?img=3" class="w-12 h-12 rounded-full">
-                                <div>
-                                    <p class="font-semibold">Santoso Budi</p>
-                                    <p class="text-sm text-gray-500">Peserta TOEIC</p>
+                                <!-- Quote Icon -->
+                                <div class="text-red-400 text-5xl mb-4 leading-none">
+                                    “
                                 </div>
+
+                                <!-- Message -->
+                                <p class="text-gray-600 text-sm leading-relaxed text-justify mb-8">
+                                    {{ $item->message }}
+                                </p>
+
+                                <!-- Divider -->
+                                <div class="border-t border-gray-100 mb-4"></div>
+
+                                <!-- User -->
+                                <div class="flex justify-between gap-3">
+
+                                    {{-- <img src="{{ $item->photo ? asset('storage/' . $item->photo) : 'https://i.pravatar.cc/60' }}"
+                                        class="w-14 h-14 rounded-full object-cover border"> --}}
+
+
+                                    <p class="font-semibold text-gray-800">
+                                        {{ $item->name }}
+                                    </p>
+
+                                    <p class="text-sm text-gray-500">
+                                        {{ $item->position }}
+                                    </p>
+
+
+                                </div>
+
                             </div>
 
                         </div>
-                    </div>
-
-                    <!-- CARD -->
-                    <div class="basis-full sm:basis-1/2 lg:basis-1/3 flex-shrink-0 px-4">
-                        <div class="bg-white rounded-2xl shadow-lg p-8 h-full">
-
-                            <div class="text-gray-300 text-5xl mb-4">“</div>
-
-                            <p class="text-gray-600 text-sm mb-8">
-                                Program sertifikasi dan kelas intensif sangat membantu karier saya.
-                            </p>
-
-                            <div class="-mx-8 border-t mb-4"></div>
-
-                            <div class="flex items-center gap-3">
-                                <img src="https://i.pravatar.cc/60?img=5" class="w-12 h-12 rounded-full">
-                                <div>
-                                    <p class="font-semibold">Siti Aminah</p>
-                                    <p class="text-sm text-gray-500">Peserta JLPT</p>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <!-- CARD -->
-                    <div class="basis-full sm:basis-1/2 lg:basis-1/3 flex-shrink-0 px-4">
-                        <div class="bg-white rounded-2xl shadow-lg p-8 h-full">
-
-                            <div class="text-gray-300 text-5xl mb-4">“</div>
-
-                            <p class="text-gray-600 text-sm mb-8">
-                                Materinya sangat aplikatif untuk dunia kerja.
-                            </p>
-
-                            <div class="-mx-8 border-t mb-4"></div>
-
-                            <div class="flex items-center gap-3">
-                                <img src="https://i.pravatar.cc/60?img=12" class="w-12 h-12 rounded-full">
-                                <div>
-                                    <p class="font-semibold">Rina Ackerman</p>
-                                    <p class="text-sm text-gray-500">Peserta BIPA</p>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                    <!-- CARD -->
-                    <div class="basis-full sm:basis-1/2 lg:basis-1/3 flex-shrink-0 px-4">
-                        <div class="bg-white rounded-2xl shadow-lg p-8 h-full">
-
-                            <div class="text-gray-300 text-5xl mb-4">“</div>
-
-                            <p class="text-gray-600 text-sm mb-8">
-                                Materinya sangat aplikatif untuk dunia kerja.
-                            </p>
-
-                            <div class="-mx-8 border-t mb-4"></div>
-
-                            <div class="flex items-center gap-3">
-                                <img src="https://i.pravatar.cc/60?img=12" class="w-12 h-12 rounded-full">
-                                <div>
-                                    <p class="font-semibold">Rina Ackerman</p>
-                                    <p class="text-sm text-gray-500">Peserta BIPA</p>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                    <!-- CARD -->
-                    <div class="basis-full sm:basis-1/2 lg:basis-1/3 flex-shrink-0 px-4">
-                        <div class="bg-white rounded-2xl shadow-lg p-8 h-full">
-
-                            <div class="text-gray-300 text-5xl mb-4">“</div>
-
-                            <p class="text-gray-600 text-sm mb-8">
-                                Materinya sangat aplikatif untuk dunia kerja.
-                            </p>
-
-                            <div class="-mx-8 border-t mb-4"></div>
-
-                            <div class="flex items-center gap-3">
-                                <img src="https://i.pravatar.cc/60?img=12" class="w-12 h-12 rounded-full">
-                                <div>
-                                    <p class="font-semibold">Rina Ackerman</p>
-                                    <p class="text-sm text-gray-500">Peserta BIPA</p>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                    <!-- CARD -->
-                    <div class="basis-full sm:basis-1/2 lg:basis-1/3 flex-shrink-0 px-4">
-                        <div class="bg-white rounded-2xl shadow-lg p-8 h-full">
-
-                            <div class="text-gray-300 text-5xl mb-4">“</div>
-
-                            <p class="text-gray-600 text-sm mb-8">
-                                Materinya sangat aplikatif untuk dunia kerja.
-                            </p>
-
-                            <div class="-mx-8 border-t mb-4"></div>
-
-                            <div class="flex items-center gap-3">
-                                <img src="https://i.pravatar.cc/60?img=12" class="w-12 h-12 rounded-full">
-                                <div>
-                                    <p class="font-semibold">Rina Ackerman</p>
-                                    <p class="text-sm text-gray-500">Peserta BIPA</p>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                    <!-- CARD -->
-                    <div class="basis-full sm:basis-1/2 lg:basis-1/3 flex-shrink-0 px-4">
-                        <div class="bg-white rounded-2xl shadow-lg p-8 h-full">
-
-                            <div class="text-gray-300 text-5xl mb-4">“</div>
-
-                            <p class="text-gray-600 text-sm mb-8">
-                                Materinya sangat aplikatif untuk dunia kerja.
-                            </p>
-
-                            <div class="-mx-8 border-t mb-4"></div>
-
-                            <div class="flex items-center gap-3">
-                                <img src="https://i.pravatar.cc/60?img=12" class="w-12 h-12 rounded-full">
-                                <div>
-                                    <p class="font-semibold">Rina Ackerman</p>
-                                    <p class="text-sm text-gray-500">Peserta BIPA</p>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
+                    @endforeach
 
                 </div>
             </div>
@@ -602,7 +459,7 @@
                                     </h3>
 
                                     <p class="text-gray-500 text-sm mb-4">
-                                        {{ Str::limit($item->news_content, 100) }}
+                                        {{ Str::limit(strip_tags(html_entity_decode($item->news_content)), 120) }}
                                     </p>
 
                                     <a href="{{ route('news.show', $item->slug) }}"
@@ -619,86 +476,28 @@
                 </div>
 
                 <!-- SIDEBAR WRAPPER -->
-                <div class="flex flex-col h-[440px]">
+                <div class="flex flex-col h-[500px]">
 
                     <!-- LIST BLOG (SCROLL) -->
                     <div class="space-y-6 overflow-y-auto pr-2 scrollbar-hide scroll-smooth flex-1">
 
                         <!-- Item -->
-                        <div class="flex gap-4">
-                            <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=300&q=60"
-                                class="w-24 h-20 object-cover rounded-lg">
+                        @foreach ($news as $item)
+                            <a href="{{ route('news.show', $item->slug) }}">
+                                <div class="flex gap-4 mb-3 bg-white rounded-lg">
+                                    <img src="{{ asset('storage/' . $item->thumbnail) }}"
+                                        alt="{{ $item->news_title }}" class="w-24 h-20 object-cover rounded-lg">
 
-                            <div>
-                                <p class="text-xs text-gray-400 mb-1">16 Mei 2024</p>
-                                <h4 class="text-sm font-semibold text-gray-800">
-                                    LKP Unsada Berhasil mencetak lulusan profesional
-                                </h4>
-                            </div>
-                        </div>
-
-                        <!-- Item -->
-                        <div class="flex gap-4">
-                            <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=300&q=60"
-                                class="w-24 h-20 object-cover rounded-lg">
-
-                            <div>
-                                <p class="text-xs text-gray-400 mb-1">16 Mei 2024</p>
-                                <h4 class="text-sm font-semibold text-gray-800">
-                                    Pelatihan berbasis industri di LKP Unsada
-                                </h4>
-                            </div>
-                        </div>
-
-                        <!-- Item -->
-                        <div class="flex gap-4">
-                            <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=300&q=60"
-                                class="w-24 h-20 object-cover rounded-lg">
-
-                            <div>
-                                <p class="text-xs text-gray-400 mb-1">16 Mei 2024</p>
-                                <h4 class="text-sm font-semibold text-gray-800">
-                                    Tips sukses mengikuti kursus profesional
-                                </h4>
-                            </div>
-                        </div>
-                        <!-- Item -->
-                        <div class="flex gap-4">
-                            <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=300&q=60"
-                                class="w-24 h-20 object-cover rounded-lg">
-
-                            <div>
-                                <p class="text-xs text-gray-400 mb-1">16 Mei 2024</p>
-                                <h4 class="text-sm font-semibold text-gray-800">
-                                    Tips sukses mengikuti kursus profesional
-                                </h4>
-                            </div>
-                        </div>
-                        <!-- Item -->
-                        <div class="flex gap-4">
-                            <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=300&q=60"
-                                class="w-24 h-20 object-cover rounded-lg">
-
-                            <div>
-                                <p class="text-xs text-gray-400 mb-1">16 Mei 2024</p>
-                                <h4 class="text-sm font-semibold text-gray-800">
-                                    Tips sukses mengikuti kursus profesional
-                                </h4>
-                            </div>
-                        </div>
-                        <!-- Item -->
-                        <div class="flex gap-4">
-                            <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=300&q=60"
-                                class="w-24 h-20 object-cover rounded-lg">
-
-                            <div>
-                                <p class="text-xs text-gray-400 mb-1">16 Mei 2024</p>
-                                <h4 class="text-sm font-semibold text-gray-800">
-                                    Tips sukses mengikuti kursus profesional
-                                </h4>
-                            </div>
-                        </div>
-
+                                    <div>
+                                        <p class="text-xs text-gray-400 mb-1">{{ $item->created_at->format('d-m-Y') }}
+                                        </p>
+                                        <h4 class="text-sm font-semibold text-gray-800">
+                                            {{ Str::limit(strip_tags(html_entity_decode($item->news_content)), 90) }}
+                                        </h4>
+                                    </div>
+                                </div>
+                            </a>
+                        @endforeach
                     </div>
 
                     <!-- LINK BAWAH -->
@@ -751,14 +550,18 @@
                         <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" class="w-7 h-7">
                     </div>
 
-                    <a href="https://wa.me/6288214140008?text=Saya%20ingin%20informasi%20LKP%20Universitas%20Darma%20Persada"
+                    <a href="https://wa.me/6288214140008?text=Halo%20saya%20ingin%20informasi%20tentang%20program%20di%20LPK%20Universitas%20Darma%20Persada"
+                        target="_blank"
                         class="bg-green-600 text-white pl-10 pr-6 py-3 rounded-lg
-        shadow-xl ring-1 ring-black/5
-        hover:bg-green-700 hover:shadow-2xl
-        transition duration-300">
-                        Whatsapp
+            shadow-xl ring-1 ring-black/5
+            hover:bg-green-700 hover:shadow-2xl
+            transition duration-300">
+
+                        WhatsApp
+
                     </a>
                 </div>
+
 
                 <!-- Instagram -->
                 <div class="relative">
@@ -766,14 +569,17 @@
                         <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" class="w-7 h-7">
                     </div>
 
-                    <a href="{{ url('https://www.instagram.com/lpk_unsada?igsh=OTV6NG9oNW5pNWI5') }}"
+                    <a href="https://www.instagram.com/lpk_unsada?igsh=OTV6NG9oNW5pNWI5" target="_blank"
                         class="bg-pink-500 text-white pl-10 pr-6 py-3 rounded-lg
-        shadow-xl ring-1 ring-black/5
-        hover:bg-pink-600 hover:shadow-2xl
-        transition duration-300">
+            shadow-xl ring-1 ring-black/5
+            hover:bg-pink-600 hover:shadow-2xl
+            transition duration-300">
+
                         Instagram
+
                     </a>
                 </div>
+
 
                 <!-- Email -->
                 <div class="relative">
@@ -781,12 +587,14 @@
                         <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" class="w-7 h-7">
                     </div>
 
-                    <a href="#"
+                    <a href="mailto:upklpk@gmail.com"
                         class="bg-blue-500 text-white pl-10 pr-6 py-3 rounded-lg
-        shadow-xl ring-1 ring-black/5
-        hover:bg-blue-600 hover:shadow-2xl
-        transition duration-300">
+            shadow-xl ring-1 ring-black/5
+            hover:bg-blue-600 hover:shadow-2xl
+            transition duration-300">
+
                         Email
+
                     </a>
                 </div>
 

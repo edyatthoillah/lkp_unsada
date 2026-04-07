@@ -20,6 +20,12 @@ class NewsController extends Controller
         return view('admin.news.news', compact('news'));
     }
 
+    public function landingnews(){
+        $news = News::latest()->paginate(6);
+
+    return view('news.index', compact('news'));
+    }
+
     /**
      * Store News
      */
@@ -58,11 +64,15 @@ class NewsController extends Controller
      */
     public function show($slug)
     {
-        $news = News::where('slug', $slug)
-            ->where('status', 'publish')
-            ->firstOrFail();
+       $news = News::where('slug', $slug)->firstOrFail();
 
-        return view('news.show', compact('news'));
+    // optional: berita lain untuk rekomendasi
+    $latestNews = News::where('id','!=',$news->id)
+        ->latest()
+        ->take(3)
+        ->get();
+
+    return view('news.show', compact('news','latestNews'));
     }
 
     /**

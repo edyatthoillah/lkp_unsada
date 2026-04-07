@@ -146,39 +146,7 @@
             </div>
         </nav>
 
-        <aside class="aside is-placed-left is-expanded">
-            <div class="aside-tools">
-                <div>
-                    LKP <b class="font-black">Unsada</b>
-                </div>
-            </div>
-            <div class="menu is-menu-main">
-                <p class="menu-label">General</p>
-
-                <ul class="menu-list">
-                    <li class="--set-active-tables-html">
-                    <li>
-                        <a class="dropdown">
-                            <span class="icon"><i class="mdi mdi-view-list"></i></span>
-                            <span class="menu-item-label">Submenus</span>
-                            <span class="icon"><i class="mdi mdi-plus"></i></span>
-                        </a>
-                        <ul>
-                            <li>
-                                <a href="">
-                                    <span>Hero Section</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#void">
-                                    <span>Berita</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </aside>
+            @include('layouts.sidebar')
         <section class="section main-section">
             <div class="bg-white shadow rounded-lg p-4">
                 <div x-data="previewModalAdd()" @keydown.escape.window="show = false">
@@ -536,69 +504,6 @@
             </div>
         </div>
     </div>
-
-    {{-- <script>
-        function previewModalEdit() {
-            return {
-                show: false,
-                data: {},
-                quill: null,
-
-                init() {
-
-                    this.$nextTick(() => {
-
-                        this.quill = new Quill('#editEditor', {
-                            theme: 'snow',
-                            placeholder: 'Edit isi berita...',
-                            modules: {
-                                toolbar: [
-                                    [{
-                                        header: [1, 2, 3, false]
-                                    }],
-                                    ['bold', 'italic', 'underline'],
-                                    ['link', 'image'],
-                                    [{
-                                        list: 'ordered'
-                                    }, {
-                                        list: 'bullet'
-                                    }],
-                                    ['clean']
-                                ]
-                            }
-                        });
-
-                    });
-
-                },
-                openModal(news) {
-
-                    this.data = news;
-                    this.show = true;
-
-                    this.$nextTick(() => {
-
-                        document.getElementById("editNewsForm").action =
-                            "/admin/news/" + news.id;
-
-                        document.getElementById("edit_title").value = news.title;
-                        document.getElementById("edit_status").value = news.status;
-                        document.getElementById("preview_thumbnail").src = news.thumbnail;
-
-                        if (this.quill) {
-                            this.quill.root.innerHTML = news.content;
-
-                            // isi textarea juga
-                            document.getElementById("edit_news_content").value =
-                                news.content;
-                        }
-
-                    });
-
-                }
-            }
-        }
-    </script> --}}
 
     <script>
         function previewModalAdd() {

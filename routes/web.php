@@ -9,12 +9,9 @@ use App\Http\Controllers\User\UserController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TwoFactorController;
+use App\Http\Controllers\TestimonialController;
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
-Route::get('/', [LandingpageController::class, 'index']);
+Route::get('/', [LandingpageController::class, 'index'])->name('dashboard');
 
 Route::get('/dashboard', function () {
 
@@ -48,6 +45,7 @@ Route::middleware(['auth', 'role:admin', 'verified', 'twofactor'])
     ->group(function () {
         Route::get('/dashboard', 'dashboard')->name('dashboard');
         Route::resource('news', NewsController::class);
+        Route::resource('testimonial', TestimonialController::class);
     });
 
 Route::middleware(['auth', 'role:superadmin', 'verified', 'twofactor'])
@@ -89,5 +87,19 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/news/{slug}', [NewsController::class, 'show'])
     ->name('news.show');
+
+Route::get('/news', [NewsController::class, 'landingnews'])->name('blogs');
+
+Route::get('/fasilitas', function () {
+    return view('facilities');
+})->name('facilities');
+
+Route::get('/program', function () {
+    return view('program');
+})->name('programs');
+
+Route::get('/pengajar', function () {
+    return view('tutor');
+})->name('tutors');
 
 require __DIR__.'/auth.php';
