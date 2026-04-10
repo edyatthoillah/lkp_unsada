@@ -46,7 +46,7 @@
 
                         <li>
                             <span class="mx-1">/</span>
-                            <a href="/news" class="hover:text-blue-600">News</a>
+                            <a href="/news" class="hover:text-blue-600">Tutors</a>
                         </li>
 
                         <li>
@@ -61,13 +61,14 @@
                     @include('layouts.admin-sidebar')
                     <div class="w-4/5">
                         <div class="bg-white border border-gray-300 shadow-sm p-4">
+
                             <div x-data="previewModalAdd()" @keydown.escape.window="show = false">
                                 <div class="mb-4">
 
 
                                     <!-- Header & Add Button -->
-                                   <div class="flex justify-between items-center mb-3">
-                                        <h2 class="font-semibold text-gray-700 text-md">News & Update</h2>
+                                    <div class="flex justify-between items-center mb-3">
+                                        <h2 class="font-semibold text-gray-700 text-md">Pengajar LKP Unsada</h2>
                                         <div class="flex gap-1">
                                             <!-- Kembali -->
                                             <!-- Kembali -->
@@ -93,88 +94,42 @@
                                             class="bg-white rounded-lg shadow-md w-full max-w-md max-h-screen overflow-y-auto relative">
                                             <!-- Header -->
                                             <div class="flex items-center justify-between p-4 border-b">
-                                                <h2 class="text-base font-semibold">Tambah Berita</h2>
+                                                <h2 class="text-base font-semibold">Tambah Tutor</h2>
                                                 <!-- Button Close -->
                                                 <button @click="show = false"
                                                     class="text-gray-400 hover:text-gray-600 text-xl leading-none">
                                                     &times;
                                                 </button>
                                             </div>
-                                            <script>
-                                                document.addEventListener("DOMContentLoaded", function() {
 
-                                                    const quill = new Quill('#editor', {
-                                                        theme: 'snow',
-                                                        placeholder: 'Tulis isi berita di sini...',
-                                                        modules: {
-                                                            toolbar: [
-                                                                [{
-                                                                    header: [1, 2, 3, false]
-                                                                }],
-                                                                ['bold', 'italic', 'underline'],
-                                                                ['link', 'image'],
-                                                                [{
-                                                                    list: 'ordered'
-                                                                }, {
-                                                                    list: 'bullet'
-                                                                }],
-                                                                ['clean']
-                                                            ]
-                                                        }
-                                                    });
-
-                                                    const form = document.querySelector("#newsForm");
-
-                                                    form.addEventListener("submit", function() {
-                                                        document.querySelector("#news_content").value = quill.root.innerHTML;
-                                                    });
-
-                                                });
-                                            </script>
+                                            <!-- Content -->
                                             <div class="p-4">
-                                                <form id="newsForm" action="{{ route('admin.news.store') }}"
+                                                <form id="tutorForm" action="{{ route('admin.tutor.store') }}"
                                                     method="POST" enctype="multipart/form-data" class="space-y-4">
                                                     @csrf
 
-                                                    {{-- Thumbnail --}}
-                                                    <div class="grid grid-cols-2 md:grid-cols-2 gap-4">
-                                                        <div>
-                                                            <x-input-label value="Thumbnail" class="text-sm" />
-                                                            <input type="file" name="thumbnail"
-                                                                class="mt-1 block w-full text-sm border-gray-300 rounded-md shadow-sm">
-                                                        </div>
-                                                        <div>
-                                                            <x-input-label value="Status" class="text-sm" />
-                                                            <select name="status"
-                                                                class="mt-1 block w-full text-sm border-gray-300 rounded-md shadow-sm py-1.5">
-                                                                <option value="draft">Draft</option>
-                                                                <option value="publish">Publish</option>
-                                                            </select>
-                                                        </div>
+                                                    <!-- Foto & Status (sejajar, grid 2 kolom) -->
+                                                    <div>
+                                                        <x-input-label value="Foto Tutor" class="text-sm" />
+                                                        <input type="file" name="photo"
+                                                            class="mt-1 block w-full text-sm border-gray-300 rounded-md shadow-sm">
                                                     </div>
 
-                                                    {{-- Judul --}}
+                                                    <!-- Nama Tutor -->
                                                     <div>
-                                                        <x-input-label value="Judul Berita" class="text-sm" />
-                                                        <x-text-input name="news_title"
+                                                        <x-input-label value="Nama Tutor" class="text-sm" />
+                                                        <x-text-input name="name"
                                                             class="block mt-1 w-full text-sm py-1.5 px-2" required />
                                                     </div>
 
-                                                    {{-- Isi --}}
+                                                    <!-- Deskripsi Tutor -->
                                                     <div>
-                                                        <x-input-label value="Isi Berita" class="text-sm" />
-
-                                                        <!-- Editor Quill -->
-                                                        <div id="editor" class="bg-white border rounded-md"
-                                                            style="height:180px;"></div>
-
-                                                        <!-- textarea untuk kirim ke Laravel -->
-                                                        <textarea name="news_content" id="news_content" hidden></textarea>
+                                                        <x-input-label value="Deskripsi Tutor" class="text-sm" />
+                                                        <textarea name="description" rows="4" class="block mt-1 w-full text-sm border-gray-300 rounded-md shadow-sm p-2"
+                                                            placeholder="Tulis deskripsi tutor di sini..."></textarea>
                                                     </div>
 
-                                                    {{-- Status --}}
-
-
+                                                    <!-- Buttons -->
                                                     <div class="flex justify-end gap-2 pt-2">
                                                         <button type="button" @click="show=false"
                                                             class="bg-gray-400 hover:bg-gray-500 text-white text-sm px-3 py-1.5 rounded-md transition">
@@ -199,38 +154,36 @@
                                         <thead class="bg-gray-100 text-gray-600 uppercase text-xs">
                                             <tr>
                                                 <th class="px-3 py-2 border">No</th>
-                                                <th class="px-3 py-2 border">Thumbnail</th>
-                                                <th class="px-3 py-2 border">Judul</th>
-                                                <th class="px-3 py-2 border">Konten</th>
-                                                <th class="px-3 py-2 border">Status</th>
+                                                <th class="px-3 py-2 border">Foto</th>
+                                                <th class="px-3 py-2 border">Nama Pengajar</th>
+                                                <th class="px-3 py-2 border">Deskripsi Pengajar</th>
                                                 <th class="px-3 py-2 border">Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($news as $data)
+                                            @foreach ($tutors as $data)
                                                 <tr class="hover:bg-gray-50">
-                                                    <td class="text-center px-3 py-2 border">{{ $loop->iteration }}</td>
+                                                    <td class="text-center px-3 py-2 border">
+                                                        {{ $loop->iteration }}</td>
                                                     <td class="px-3 py-2 border">
-                                                        <img src="{{ asset('storage/' . $data->thumbnail) }}"
+                                                        <img src="{{ asset('storage/' . $data->photo) }}"
                                                             class="h-20 rounded">
                                                     </td>
-                                                    <td class="px-3 py-2 border">{{ $data->news_title ?? '-' }}</td>
-                                                    <td class="px-3 py-2 border">{!! Str::limit(strip_tags($data->news_content ?? '-'), 150) !!}</td>
-                                                    <td class="px-3 py-2 border">{{ $data->status }}</td>
+                                                    <td class="px-3 py-2 border">{{ $data->name ?? '-' }}</td>
+                                                    <td class="px-3 py-2 border">{!! Str::limit(strip_tags($data->description ?? '-'), 150) !!}</td>
                                                     <td class="px-3 py-2 border">
                                                         <div class="inline-flex">
                                                             <button
                                                                 @click="openModal({
                                                             id: @js($data->id),
-                                                            title: @js($data->news_title),
-                                                            content: @js($data->news_content),
-                                                            status: @js($data->status),
-                                                            thumbnail: @js(asset('storage/' . $data->thumbnail))
+                                                            name: @js($data->name),
+                                                            description: @js($data->description),
+                                                            photo: @js(asset('storage/' . $data->photo))
                                                         })"
                                                                 class="px-3 py-1 text-xs bg-yellow-500 hover:bg-yellow-600 text-white border border-yellow-700 rounded-l transition">
                                                                 Edit
                                                             </button>
-                                                            <form action="{{ route('admin.news.destroy', $data->id) }}"
+                                                            <form action="{{ route('admin.tutor.destroy', $data->id) }}"
                                                                 method="POST"
                                                                 onsubmit="return confirm('Yakin ingin menghapus berita ini?')">
                                                                 @csrf
@@ -245,7 +198,8 @@
                                         </tbody>
                                     </table>
 
-                                    <!-- Modal Edit -->
+
+                                    <!-- Modal Edit Tutor -->
                                     <div x-show="show" x-transition
                                         class="fixed inset-0 bg-black/40 z-50 flex items-start justify-center p-4 overflow-y-auto">
 
@@ -253,8 +207,7 @@
                                             class="bg-white rounded-lg shadow-md w-full max-w-md max-h-screen overflow-y-auto relative">
                                             <!-- Header -->
                                             <div class="flex items-center justify-between p-4 border-b">
-                                                <h2 class="text-base font-semibold">Edit Berita</h2>
-                                                <!-- Button Close -->
+                                                <h2 class="text-base font-semibold">Edit Tutor</h2>
                                                 <button @click="show = false"
                                                     class="text-gray-400 hover:text-gray-600 text-xl leading-none">
                                                     &times;
@@ -263,49 +216,37 @@
 
                                             <!-- Content -->
                                             <div class="p-4">
-                                                <form id="editNewsForm" method="POST" enctype="multipart/form-data"
+                                                <form id="editTutorForm" method="POST" enctype="multipart/form-data"
                                                     class="space-y-4">
                                                     @csrf
                                                     @method('PUT')
-                                                    <input type="hidden" id="news_id">
+                                                    <input type="hidden" id="tutor_id">
 
-                                                    <div class="grid grid-cols-2 md:grid-cols-2 gap-4">
-
-                                                        {{-- Thumbnail --}}
-                                                        <div>
-                                                            <x-input-label value="Thumbnail" class="text-sm" />
-                                                            <input type="file" name="thumbnail"
-                                                                class="mt-1 block w-full text-sm border-gray-300 rounded-md shadow-sm">
-                                                        </div>
-
-                                                        {{-- Status --}}
-                                                        <div>
-                                                            <x-input-label value="Status" class="text-sm" />
-                                                            <select id="edit_status" name="status"
-                                                                class="mt-1 block w-full text-sm border-gray-300 rounded-md shadow-sm py-1.5">
-                                                                <option value="draft">Draft</option>
-                                                                <option value="publish">Publish</option>
-                                                            </select>
-                                                        </div>
-
+                                                    <!-- Foto -->
+                                                    <div>
+                                                        <x-input-label value="Foto Tutor" class="text-sm" />
+                                                        <img id="preview_photo"
+                                                            class="w-full h-32 object-cover rounded mb-2"
+                                                            src="" alt="Preview Foto">
+                                                        <input type="file" name="photo"
+                                                            class="mt-1 block w-full text-sm border-gray-300 rounded-md shadow-sm">
                                                     </div>
 
-                                                    {{-- Judul --}}
+                                                    <!-- Nama Tutor -->
                                                     <div>
-                                                        <x-input-label value="Judul Berita" class="text-sm" />
-                                                        <x-text-input id="edit_title" name="news_title"
+                                                        <x-input-label value="Nama Tutor" class="text-sm" />
+                                                        <x-text-input id="edit_name" name="name"
                                                             class="block mt-1 w-full text-sm py-1.5 px-2" />
                                                     </div>
 
-                                                    {{-- Isi --}}
+                                                    <!-- Deskripsi Tutor -->
                                                     <div>
-                                                        <x-input-label value="Isi Berita" />
-
-                                                        <div id="editEditor" style="height:200px"></div>
-
-                                                        <textarea id="edit_news_content" name="news_content" hidden></textarea>
+                                                        <x-input-label value="Deskripsi Tutor" class="text-sm" />
+                                                        <textarea id="edit_description" name="description" rows="4"
+                                                            class="block mt-1 w-full text-sm border-gray-300 rounded-md shadow-sm p-2"></textarea>
                                                     </div>
 
+                                                    <!-- Buttons -->
                                                     <div class="flex justify-end gap-2 pt-2">
                                                         <button type="button" @click="show=false"
                                                             class="bg-gray-400 hover:bg-gray-500 text-white text-sm px-3 py-1.5 rounded-md transition">
@@ -318,7 +259,6 @@
                                                     </div>
                                                 </form>
                                             </div>
-
                                         </div>
                                     </div>
 
@@ -327,61 +267,27 @@
                                             return {
                                                 show: false,
                                                 data: {},
-                                                quill: null,
-                                                init() {
-                                                    this.$nextTick(() => {
-                                                        if (!this.quill) {
-                                                            this.quill = new Quill('#editEditor', {
-                                                                theme: 'snow',
-                                                                placeholder: 'Edit isi berita...',
-                                                                modules: {
-                                                                    toolbar: [
-                                                                        [{
-                                                                            header: [1, 2, 3, false]
-                                                                        }],
-                                                                        ['bold', 'italic', 'underline'],
-                                                                        ['link', 'image'],
-                                                                        [{
-                                                                            list: 'ordered'
-                                                                        }, {
-                                                                            list: 'bullet'
-                                                                        }],
-                                                                        ['clean']
-                                                                    ]
-                                                                }
-                                                            });
-                                                        }
-                                                    });
-                                                },
-                                                openModal(news) {
-                                                    this.data = news;
+                                                openModal(tutor) {
+                                                    this.data = tutor;
                                                     this.show = true;
 
                                                     this.$nextTick(() => {
-                                                        document.getElementById("editNewsForm").action = "/admin/news/" + news.id;
-                                                        document.getElementById("edit_title").value = news.title;
-                                                        document.getElementById("edit_status").value = news.status;
+                                                        // Set form action
+                                                        document.getElementById("editTutorForm").action = "/admin/tutor/" + tutor.id;
+                                                        document.getElementById("tutor_id").value = tutor.id;
 
-                                                        // 🔥 FIX QUILL (pakai dangerouslyPasteHTML)
-                                                        if (this.quill) {
-                                                            this.quill.setContents([]); // reset dulu
-                                                            this.quill.clipboard.dangerouslyPasteHTML(news.content);
-                                                        }
+                                                        // Set form values
+                                                        document.getElementById("edit_name").value = tutor.name;
+                                                        document.getElementById("edit_description").value = tutor.description;
 
-                                                        document.getElementById("edit_news_content").value = news.content;
+                                                        // Preview foto lama
+                                                        document.getElementById("preview_photo").src = tutor.photo;
                                                     });
                                                 }
                                             }
                                         }
-
-                                        document.addEventListener("DOMContentLoaded", function() {
-                                            const form = document.getElementById("editNewsForm");
-                                            if (form) form.addEventListener("submit", function() {
-                                                const editor = document.querySelector('#editEditor .ql-editor');
-                                                if (editor) document.getElementById("edit_news_content").value = editor.innerHTML;
-                                            });
-                                        });
                                     </script>
+
                                 </div>
                             </div>
                         </div>
@@ -390,6 +296,7 @@
             </section>
         </div>
     </div>
+
 
 
     <script>

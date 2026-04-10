@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'LKP Unsada') }}</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -20,37 +20,28 @@
 <div id="sakura-container" class="fixed top-0 left-0 w-full h-full pointer-events-none z-50"></div>
 
 <body class="bg-gray-50">
+
     @include('layouts.header')
+
     <!-- HERO SECTION -->
     <section x-data="heroSlider()" x-init="start()"
         class="relative h-[100vh] flex items-center justify-center text-white text-center overflow-hidden">
-
         <!-- Background Images -->
-        <template x-for="(image, index) in images" :key="index">
-            <img :src="image" x-show="current === index" x-transition:enter="transition-opacity duration-1000"
-                x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
-                class="absolute inset-0 w-full h-full object-cover" alt="Hero">
-        </template>
-
+        <img src="{{ asset('storage/' . $landing->image_hero) }}" class="absolute inset-0 w-full h-full object-cover"
+            alt="Hero">
         <!-- Dark Overlay -->
         <div class="absolute inset-0 bg-black/70"></div>
-
         <!-- Content -->
         <div class="relative z-10 max-w-6xl mx-auto px-6">
-
-            <h1 class="text-2xl md:text-4xl lg:text-5xl font-black m-4">
-                Lembaga Kursus dan Pelatihan (LKP)
+            <h1 class="text-2xl md:text-4xl lg:text-5xl font-black m-8">
+                {{ $landing->hero_section }}
             </h1>
-
-            <h1 class="text-2xl md:text-4xl lg:text-5xl font-black mb-6">
-                Universitas Darma Persada
-            </h1>
-            <a href="https://wa.me/6281234567890?text=Saya%20ingin%20mendapatkan%20informasi%20lebih%20lanjut%20tentang%20Program%20LKP%20Unsada"
+            <a href="https://wa.me/{{ $landing->whatsapp }}?text=Saya%20ingin%20mendapatkan%20informasi%20lebih%20lanjut%20tentang%20Program%20LKP%20Unsada"
                 target="_blank"
                 class="inline-flex items-center gap-3
                         bg-gradient-to-r from-indigo-600 via-purple-600 to-fuchsia-600
                         hover:from-indigo-700 hover:via-purple-700 hover:to-fuchsia-700
-                        px-7 py-3 rounded-xl font-semibold text-white
+                        px-7 py-3 rounded-lg font-semibold text-white
                         shadow-[0_8px_25px_rgba(124,58,237,0.5)]
                         hover:shadow-[0_12px_35px_rgba(124,58,237,0.7)]
                         transition-all duration-300
@@ -68,31 +59,17 @@
             <!-- Image Kiri -->
             <div class="md:w-1/3 flex justify-center md:justify-start">
                 <img src="{{ asset('images/landingpage/about.jpg') }}" alt="Tentang Kami"
-                    class="rounded-xl shadow-2xl w-full max-w-sm object-cover hover:scale-105 transition-transform duration-500">
+                    class="rounded-lg shadow-2xl w-full max-w-sm object-cover hover:scale-105 transition-transform duration-500">
             </div>
 
             <!-- Konten Teks Kanan -->
             <div class="md:w-2/3 flex flex-col justify-center text-center md:text-left">
                 <h2 class="text-4xl font-extrabold text-gray-800 mb-6">Tentang Kami</h2>
                 <p class="text-gray-600 mb-8 leading-relaxed text-lg break-words text-justify">
-                    Era globalisasi yang didukung dengan terbentuknya APEC dan AFTA mengharuskan semua negara
-                    mempersiapkan diri untuk menghadapi persaingan serta kerja sama dalam bidang perdagangan
-                    internasional dan pengembangan hubungan antarnegara. Kondisi tersebut membutuhkan peningkatan
-                    keterampilan staf dalam hubungan luar negeri.
-
-                    Faktor utama yang sangat penting sebagai sarana mengikuti perkembangan tersebut adalah
-                    pengetahuan dan kemampuan berkomunikasi.
-
-                    Dalam kaitan tersebut, LPK UNSADA di bawah pembinaan Universitas Darma Persada yang didirikan
-                    pada tanggal 6 Juli 1986 ikut membantu meningkatkan kemampuan keterampilan berbahasa asing
-                    khususnya bahasa Asia Timur (Jepang dan Cina/Mandarin).
-
-                    Di samping itu, LPK UNSADA memberikan pelayanan kursus Bahasa Indonesia sebagai Bahasa Asing,
-                    kursus Bahasa Inggris, kursus Aplikasi Komputer, dan pelayanan jasa penerjemahan.
+                    {{ $landing->tentang_kami }}
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-                    <a href="{{ url('https://drive.google.com/file/d/114xvaIUdO3PbeOfk2N9PGlvS2R2dwpkJ/view?usp=drive_link') }}"
-                        target="_blank"
+                    <a href="{{ $landing->link_brosur }}" target="_blank"
                         class="py-3 px-8 bg-blue-900 text-white font-semibold rounded-lg shadow-lg hover:bg-blue-950 transition flex items-center justify-center gap-2">
                         <i class="fas fa-download"></i> Unduh Brosur
                     </a>
@@ -122,108 +99,32 @@
 
             <!-- Grid 4 Card -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                <!-- Card 1 -->
-                <div
-                    class="bg-white p-7 rounded-2xl shadow-lg hover:shadow-2xl transition duration-300 border border-gray-100 group">
 
-                    <div class="flex flex-col items-center text-center">
+                @foreach ($services as $item)
+                    <div
+                        class="bg-white p-7 rounded-lg shadow-lg hover:shadow-2xl transition duration-300 border border-gray-100 group">
 
-                        <div
-                            class="w-16 h-16 flex items-center justify-center bg-indigo-100 rounded-full shadow-md mb-5 group-hover:bg-indigo-600 transition">
-                            <i class="fas fa-language text-indigo-600 text-2xl group-hover:text-white transition"></i>
+                        <div class="flex flex-col items-center text-center">
+
+                            <div
+                                class="w-16 h-16 flex items-center justify-center bg-indigo-100 rounded-full shadow-md mb-5 group-hover:bg-indigo-600 transition">
+                                <i
+                                    class="{{ $item->icon }} text-indigo-600 text-2xl group-hover:text-white transition"></i>
+                            </div>
+
+                            <h3 class="text-xl font-bold mb-3 text-gray-800">
+                                {{ $item->name }}
+                            </h3>
+
+                            <p class="text-gray-600 leading-relaxed text-sm sm:text-base text-center">
+                                {{ $item->description }}
+                            </p>
+
                         </div>
 
-                        <h3 class="text-xl font-bold mb-3 text-gray-800">
-                            Pelatihan Bahasa
-                        </h3>
-
-                        <p class="text-gray-600 leading-relaxed text-sm sm:text-base text-center">
-                            LKP Unsada menyelenggarakan pelatihan bahasa Inggris, Jepang, Mandarin,
-                            dan Indonesia (BIPA) untuk meningkatkan kemampuan komunikasi dan
-                            profesionalisme peserta.
-                        </p>
-
                     </div>
+                @endforeach
 
-                </div>
-
-
-                <!-- Card 2 -->
-                <div
-                    class="bg-white p-7 rounded-2xl shadow-lg hover:shadow-2xl transition duration-300 border border-gray-100 group">
-
-                    <div class="flex flex-col items-center text-center">
-
-                        <div
-                            class="w-16 h-16 flex items-center justify-center bg-indigo-100 rounded-full shadow-md mb-5 group-hover:bg-indigo-600 transition">
-                            <i
-                                class="fas fa-chalkboard-teacher text-indigo-600 text-2xl group-hover:text-white transition"></i>
-                        </div>
-
-                        <h3 class="text-xl font-bold mb-3 text-gray-800">
-                            Kelas Intensive
-                        </h3>
-
-                        <p class="text-gray-600 leading-relaxed text-sm sm:text-base text-center">
-                            Kelas Intensive JLPT, HSK, TEFL, dan TOEIC untuk meningkatkan
-                            kemampuan bahasa serta mempersiapkan peserta menghadapi
-                            sertifikasi profesional.
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <!-- Card 3 -->
-                <div
-                    class="bg-white p-7 rounded-2xl shadow-lg hover:shadow-2xl transition duration-300 border border-gray-100 group">
-
-                    <div class="flex flex-col items-center text-center">
-
-                        <div
-                            class="w-16 h-16 flex items-center justify-center bg-indigo-100 rounded-full shadow-md mb-5 group-hover:bg-indigo-600 transition">
-                            <i
-                                class="fas fa-certificate text-indigo-600 text-2xl group-hover:text-white transition"></i>
-                        </div>
-
-                        <h3 class="text-xl font-bold mb-3 text-gray-800">
-                            Sertifikasi
-                        </h3>
-
-                        <p class="text-gray-600 leading-relaxed text-sm sm:text-base text-center">
-                            Menyediakan berbagai sertifikasi seperti BNSP, Gelar Non-Akademik,
-                            dan Brevet A&B untuk meningkatkan kompetensi dan profesionalisme
-                            peserta di dunia kerja.
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <!-- Card 4 -->
-                <div
-                    class="bg-white p-7 rounded-2xl shadow-lg hover:shadow-2xl transition duration-300 border border-gray-100 group">
-
-                    <div class="flex flex-col items-center text-center">
-
-                        <div
-                            class="w-16 h-16 flex items-center justify-center bg-indigo-100 rounded-full shadow-md mb-5 group-hover:bg-indigo-600 transition">
-                            <i class="fas fa-globe text-indigo-600 text-2xl group-hover:text-white transition"></i>
-                        </div>
-
-                        <h3 class="text-xl font-bold mb-3 text-gray-800">
-                            Cultural Immersion
-                        </h3>
-
-                        <p class="text-gray-600 leading-relaxed text-sm sm:text-base text-center">
-                            Program Indonesian Language & Cultural Immersion memberikan
-                            pengalaman belajar bahasa Indonesia sekaligus mengenal
-                            budaya lokal secara langsung.
-                        </p>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
@@ -254,15 +155,15 @@
 
                 <!-- IMAGE LEFT -->
                 <img id="imgLeft"
-                    class="absolute w-[40%] h-[240px] object-cover rounded-2xl opacity-50 scale-90 -translate-x-[70%] transition-all duration-900 ease-in-out">
+                    class="absolute w-[40%] h-[240px] object-cover rounded-lg opacity-50 scale-90 -translate-x-[70%] transition-all duration-900 ease-in-out">
 
                 <!-- IMAGE CENTER -->
                 <img id="imgCenter"
-                    class="absolute w-[55%] h-[300px] object-cover rounded-2xl shadow-xl z-10 transition-all duration-900 ease-in-out">
+                    class="absolute w-[55%] h-[300px] object-cover rounded-lg shadow-xl z-10 transition-all duration-900 ease-in-out">
 
                 <!-- IMAGE RIGHT -->
                 <img id="imgRight"
-                    class="absolute w-[40%] h-[240px] object-cover rounded-2xl opacity-50 scale-90 translate-x-[70%] transition-all duration-900 ease-in-out">
+                    class="absolute w-[40%] h-[240px] object-cover rounded-lg opacity-50 scale-90 translate-x-[70%] transition-all duration-900 ease-in-out">
 
                 <!-- BUTTON -->
                 <button id="prevGallery"
@@ -283,16 +184,10 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
 
-            const images = [
-                "{{ asset('images/landingpage/slider/slide1.webp') }}",
-                "{{ asset('images/landingpage/slider/slide2.webp') }}",
-                "{{ asset('images/landingpage/slider/slide3.webp') }}",
-                "{{ asset('images/landingpage/slider/slide4.webp') }}",
-                "{{ asset('images/landingpage/slider/slide5.webp') }}"
-            ];
+            const images = @json($galleries->map(fn($item) => asset('storage/' . $item->image)));
 
-            let index = 0
-            let autoSlide
+            let index = 0;
+            let autoSlide;
 
             const left = document.getElementById("imgLeft")
             const center = document.getElementById("imgCenter")
@@ -303,13 +198,14 @@
 
             function updateGallery() {
 
+                if (images.length === 0) return;
+
                 const prev = (index - 1 + images.length) % images.length
                 const next = (index + 1) % images.length
 
                 left.src = images[prev]
                 center.src = images[index]
                 right.src = images[next]
-
             }
 
             function nextSlide() {
@@ -364,7 +260,7 @@
                         <div class="basis-full sm:basis-1/2 lg:basis-1/3 flex-shrink-0 px-4">
 
                             <div
-                                class="bg-white rounded-2xl shadow-lg p-8 h-full hover:shadow-2xl transition duration-300">
+                                class="bg-white rounded-lg shadow-lg p-8 h-full hover:shadow-2xl transition duration-300">
 
                                 <!-- Quote Icon -->
                                 <div class="text-red-400 text-5xl mb-4 leading-none">
@@ -429,7 +325,7 @@
             <!-- Heading -->
             <div class="text-center mb-14">
                 <h2 class="text-3xl font-bold text-gray-900">
-                    Blog <br>
+                    Berita <br>
                     Lembaga Kursus dan Pelatihan (LKP) Unsada
                 </h2>
             </div>
@@ -444,7 +340,7 @@
 
                         @foreach ($news as $item)
                             <!-- Card -->
-                            <div class="bg-white rounded-xl shadow-sm overflow-hidden snap-start">
+                            <div class="bg-white rounded-lg shadow-sm overflow-hidden snap-start">
                                 <img src="{{ asset('storage/' . $item->thumbnail) }}" alt="{{ $item->news_title }}"
                                     class="w-full h-48 object-cover">
 
@@ -502,8 +398,8 @@
 
                     <!-- LINK BAWAH -->
                     <div class="pt-4 text-right">
-                        <a href="#" class="text-red-500 text-sm font-medium hover:underline">
-                            Lihat blog lainnya →
+                        <a href="{{ route('blogs') }}" class="text-red-500 text-sm font-medium hover:underline">
+                            Lihat berita lainnya →
                         </a>
                     </div>
 
@@ -531,73 +427,55 @@
 
     <section class="bg-gradient-to-r from-purple-800/20 via-gray-50 to-purple-800/20 py-20">
         <div class="max-w-4xl mx-auto text-center px-6">
-
             <h2 class="text-3xl md:text-4xl font-bold mb-4">
                 Siap jadi bagian dari LKP Unsada ? <br>
                 Daftar Sekarang !
             </h2>
-
             <p class="text-gray-500 mb-12 max-w-2xl mx-auto">
                 Jangan tunda lagi! Bergabunglah dengan LKP UNSADA dan raih peluang terbaik
                 untuk meningkatkan kompetensi dan karier Anda.
             </p>
-
             <div class="flex flex-wrap justify-center gap-8">
-
                 <!-- WhatsApp -->
                 <div class="relative">
                     <div class="absolute -left-5 top-1/2 -translate-y-1/2 bg-white p-2 rounded-full shadow-lg">
                         <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" class="w-7 h-7">
                     </div>
-
-                    <a href="https://wa.me/6288214140008?text=Halo%20saya%20ingin%20informasi%20tentang%20program%20di%20LPK%20Universitas%20Darma%20Persada"
+                    <a href="https://wa.me/{{ $landing->whatsapp }}?text=Halo%20saya%20ingin%20informasi%20tentang%20program%20di%20LPK%20Universitas%20Darma%20Persada"
                         target="_blank"
                         class="bg-green-600 text-white pl-10 pr-6 py-3 rounded-lg
-            shadow-xl ring-1 ring-black/5
-            hover:bg-green-700 hover:shadow-2xl
-            transition duration-300">
-
+                        shadow-xl ring-1 ring-black/5
+                        hover:bg-green-700 hover:shadow-2xl
+                        transition duration-300">
                         WhatsApp
-
                     </a>
                 </div>
-
-
                 <!-- Instagram -->
                 <div class="relative">
                     <div class="absolute -left-5 top-1/2 -translate-y-1/2 bg-white p-2 rounded-full shadow-lg">
                         <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" class="w-7 h-7">
                     </div>
-
-                    <a href="https://www.instagram.com/lpk_unsada?igsh=OTV6NG9oNW5pNWI5" target="_blank"
+                    <a href="{{ $landing->instagram }}" target="_blank"
                         class="bg-pink-500 text-white pl-10 pr-6 py-3 rounded-lg
-            shadow-xl ring-1 ring-black/5
-            hover:bg-pink-600 hover:shadow-2xl
-            transition duration-300">
-
+                        shadow-xl ring-1 ring-black/5
+                        hover:bg-pink-600 hover:shadow-2xl
+                        transition duration-300">
                         Instagram
-
                     </a>
                 </div>
-
-
                 <!-- Email -->
                 <div class="relative">
                     <div class="absolute -left-5 top-1/2 -translate-y-1/2 bg-white p-2 rounded-full shadow-lg">
                         <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" class="w-7 h-7">
                     </div>
-
-                    <a href="mailto:upklpk@gmail.com"
+                    <a href="mailto:{{ $landing->email }}"
                         class="bg-blue-500 text-white pl-10 pr-6 py-3 rounded-lg
-            shadow-xl ring-1 ring-black/5
-            hover:bg-blue-600 hover:shadow-2xl
-            transition duration-300">
-
+                        shadow-xl ring-1 ring-black/5
+                        hover:bg-blue-600 hover:shadow-2xl
+                        transition duration-300">
                         Email
-
                     </a>
                 </div>
-
             </div>
         </div>
     </section>
@@ -637,7 +515,7 @@
                 <a href="#beranda" class="text-gray-300 hover:text-white transition">Beranda</a>
                 <a href="#tentang" class="text-gray-300 hover:text-white transition">Tentang</a>
                 <a href="#layanan" class="text-gray-300 hover:text-white transition">Layanan</a>
-                <a href="#blog" class="text-gray-300 hover:text-white transition">Blog</a>
+                <a href="#blog" class="text-gray-300 hover:text-white transition">Berita</a>
             </div>
 
             <!-- Kolom 3: Informasi Kontak -->
@@ -667,7 +545,7 @@
 
     <!-- Floating WhatsApp Button -->
     <!-- Floating WhatsApp Button -->
-    <a href="https://wa.me/6288214140008?text=Saya%20ingin%20informasi%20LKP%20Universitas%20Darma%20Persada"
+    <a href="https://wa.me/{{ $landing->whatsapp }}?text=Saya%20ingin%20informasi%20LKP%20Universitas%20Darma%20Persada"
         target="_blank"
         class="fixed bottom-10 right-10 w-16 h-16 bg-green-600 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform"
         title="Chat via WhatsApp">

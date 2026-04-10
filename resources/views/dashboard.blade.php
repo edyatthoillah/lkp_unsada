@@ -101,7 +101,7 @@
                                 <span>Messages</span>
                             </a>
                             <hr class="navbar-divider">
-                             <form method="POST" action="{{ route('logout') }}">
+                            <form method="POST" action="{{ route('logout') }}">
                                 @csrf
                                 <button type="submit" class="navbar-item">
                                     <span class="icon"><i class="mdi mdi-logout"></i></span>

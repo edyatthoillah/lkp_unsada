@@ -44,7 +44,7 @@
             <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
 
                 <!-- Fasilitas 1 -->
-                <div class="group relative overflow-hidden rounded-xl shadow-md">
+                <div class="group relative overflow-hidden rounded-lg shadow-md">
                     <img src="{{ asset('images/fasilitas/fasilitas (1).jpeg') }}"
                         class="w-full h-60 object-cover group-hover:scale-110 transition duration-500">
 
@@ -57,7 +57,7 @@
                 </div>
 
                 <!-- Fasilitas 2 -->
-                <div class="group relative overflow-hidden rounded-xl shadow-md">
+                <div class="group relative overflow-hidden rounded-lg shadow-md">
                     <img src="{{ asset('images/fasilitas/fasilitas (2).jpeg') }}"
                         class="w-full h-60 object-cover group-hover:scale-110 transition duration-500">
 
@@ -70,7 +70,7 @@
                 </div>
 
                 <!-- Fasilitas 3 -->
-                <div class="group relative overflow-hidden rounded-xl shadow-md">
+                <div class="group relative overflow-hidden rounded-lg shadow-md">
                     <img src="{{ asset('images/fasilitas/fasilitas (3).jpeg') }}"
                         class="w-full h-60 object-cover group-hover:scale-110 transition duration-500">
 
@@ -83,7 +83,7 @@
                 </div>
 
                 <!-- Fasilitas 4 -->
-                <div class="group relative overflow-hidden rounded-xl shadow-md">
+                <div class="group relative overflow-hidden rounded-lg shadow-md">
                     <img src="{{ asset('images/fasilitas/fasilitas (4).jpeg') }}"
                         class="w-full h-60 object-cover group-hover:scale-110 transition duration-500">
 
@@ -96,7 +96,7 @@
                 </div>
 
                 <!-- Fasilitas 5 -->
-                <div class="group relative overflow-hidden rounded-xl shadow-md">
+                <div class="group relative overflow-hidden rounded-lg shadow-md">
                     <img src="{{ asset('images/fasilitas/fasilitas (5).jpeg') }}"
                         class="w-full h-60 object-cover group-hover:scale-110 transition duration-500">
 
@@ -109,7 +109,7 @@
                 </div>
 
                 <!-- Fasilitas 6 -->
-                <div class="group relative overflow-hidden rounded-xl shadow-md">
+                <div class="group relative overflow-hidden rounded-lg shadow-md">
                     <img src="{{ asset('images/fasilitas/fasilitas (6).jpeg') }}"
                         class="w-full h-60 object-cover group-hover:scale-110 transition duration-500">
 
@@ -122,7 +122,7 @@
                 </div>
 
                 <!-- Fasilitas 7 -->
-                <div class="group relative overflow-hidden rounded-xl shadow-md">
+                <div class="group relative overflow-hidden rounded-lg shadow-md">
                     <img src="{{ asset('images/fasilitas/fasilitas (7).jpeg') }}"
                         class="w-full h-60 object-cover group-hover:scale-110 transition duration-500">
 
@@ -135,7 +135,7 @@
                 </div>
 
                 <!-- Fasilitas 8 -->
-                <div class="group relative overflow-hidden rounded-xl shadow-md">
+                <div class="group relative overflow-hidden rounded-lg shadow-md">
                     <img src="{{ asset('images/fasilitas/fasilitas (8).jpeg') }}"
                         class="w-full h-60 object-cover group-hover:scale-110 transition duration-500">
 

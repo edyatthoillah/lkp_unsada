@@ -10,6 +10,6 @@ class Testimonial extends Model
         'name',
         'position',
         'message',
-        'photo'
+        'photo',
     ];
 }

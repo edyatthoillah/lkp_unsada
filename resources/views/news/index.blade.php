@@ -44,24 +44,6 @@
     <section class="py-16">
 
         <div class="max-w-7xl mx-auto px-6">
-
-            <!-- SEARCH -->
-            <div class="flex justify-between items-center mb-10 flex-wrap gap-4">
-
-                <form method="GET" class="flex gap-2">
-
-                    <input type="text" name="search" placeholder="Cari berita..."
-                        class="border rounded-lg px-4 py-2 w-60">
-
-                    <button class="bg-red-500 text-white px-4 py-2 rounded-lg">
-                        Cari
-                    </button>
-
-                </form>
-
-            </div>
-
-
             <!-- GRID NEWS -->
             <div class="grid md:grid-cols-3 gap-8">
 

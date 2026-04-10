@@ -2,35 +2,40 @@
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\NewsController;
+use App\Http\Controllers\Admin\TutorController;
+use App\Http\Controllers\Admin\ProgramController;
+use App\Http\Controllers\Admin\TestimonialController;
+use App\Http\Controllers\Admin\GalleryController;
+use App\Http\Controllers\Admin\ServicesController;
+use App\Http\Controllers\Admin\FacilitiesController;
+use App\Http\Controllers\Admin\DetailProgramController;
+use App\Http\Controllers\Admin\LandingpageController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\LandingpageController;
 use App\Http\Controllers\SuperAdmin\SuperAdminController;
+use App\Http\Controllers\TwoFactorController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\TwoFactorController;
-use App\Http\Controllers\TestimonialController;
 
 Route::get('/', [LandingpageController::class, 'index'])->name('dashboard');
 
 Route::get('/dashboard', function () {
 
-    if(auth()->user()->hasRole('admin')){
+    if (auth()->user()->hasRole('admin')) {
         return redirect()->route('admin.dashboard');
     }
 
-    if(auth()->user()->hasRole('user')){
+    if (auth()->user()->hasRole('user')) {
         return redirect()->route('user.dashboard');
     }
 
-    if(auth()->user()->hasRole('superadmin')){
+    if (auth()->user()->hasRole('superadmin')) {
         return redirect()->route('superadmin.dashboard');
     }
 
 })->middleware('auth')->name('dashboard');
 
-
-Route::middleware(['auth', 'role:user', 'verified', 'twofactor'])
+Route::middleware(['auth', 'role:user', 'verified'])
     ->prefix('user')
     ->name('user.')
     ->controller(UserController::class)
@@ -38,7 +43,7 @@ Route::middleware(['auth', 'role:user', 'verified', 'twofactor'])
         Route::get('/dashboard', 'dashboard')->name('dashboard');
     });
 
-Route::middleware(['auth', 'role:admin', 'verified', 'twofactor'])
+Route::middleware(['auth', 'role:admin', 'verified'])
     ->prefix('admin')
     ->name('admin.')
     ->controller(AdminController::class)
@@ -46,6 +51,17 @@ Route::middleware(['auth', 'role:admin', 'verified', 'twofactor'])
         Route::get('/dashboard', 'dashboard')->name('dashboard');
         Route::resource('news', NewsController::class);
         Route::resource('testimonial', TestimonialController::class);
+        Route::resource('tutor', TutorController::class);
+        Route::resource('program', ProgramController::class);
+        Route::resource('facilities', FacilitiesController::class);
+        Route::resource('galery', GalleryController::class);
+        Route::resource('services', ServicesController::class);
+        Route::post('/detail-program', [DetailProgramController::class, 'store'])->name('detail.store');
+        Route::put('/detail-program/{id}', [DetailProgramController::class, 'update'])->name('detail.update');
+        Route::delete('/detail-program/{id}', [DetailProgramController::class, 'destroy'])->name('detail.delete');
+        Route::get('/admin/program/{id}', [ProgramController::class, 'show'])->name('admin.program.show');
+        Route::get('/landingpage', [LandingPageController::class, 'adminindex'])->name('landingpage.index');
+        Route::post('/landingpage/update', [LandingPageController::class, 'update'])->name('landingpage.update');
     });
 
 Route::middleware(['auth', 'role:superadmin', 'verified', 'twofactor'])
@@ -87,19 +103,12 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/news/{slug}', [NewsController::class, 'show'])
     ->name('news.show');
-
 Route::get('/news', [NewsController::class, 'landingnews'])->name('blogs');
+Route::get('/pengajar', [TutorController::class, 'tutors'])->name('tutors');
+Route::get('/program', [DetailProgramController::class, 'programs'])->name('programs');
 
 Route::get('/fasilitas', function () {
     return view('facilities');
 })->name('facilities');
-
-Route::get('/program', function () {
-    return view('program');
-})->name('programs');
-
-Route::get('/pengajar', function () {
-    return view('tutor');
-})->name('tutors');
 
 require __DIR__.'/auth.php';
