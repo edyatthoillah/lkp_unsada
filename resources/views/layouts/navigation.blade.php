@@ -15,17 +15,8 @@
                     <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('admin.news.index')" :active="request()->routeIs('admin.news.index')">
-                        {{ __('Berita') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('admin.testimonial.index')" :active="request()->routeIs('admin.testimonial.index')">
-                        {{ __('Testimoni') }}
-                    </x-nav-link>
-                     <x-nav-link :href="route('admin.tutor.index')" :active="request()->routeIs('admin.tutor.index')">
-                        {{ __('Pengajar') }}
-                    </x-nav-link>
-                      <x-nav-link :href="route('admin.tutor.index')" :active="request()->routeIs('admin.tutor.index')">
-                        {{ __('Program') }}
+                    <x-nav-link :href="route('admin.landingpage.index')" :active="request()->routeIs('admin.landingpage.index')">
+                        {{ __('Landing Page') }}
                     </x-nav-link>
                 </div>
 

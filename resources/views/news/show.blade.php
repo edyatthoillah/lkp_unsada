@@ -79,7 +79,7 @@
     @endif
 
 
-    @include('layouts.footer')
+@include('layouts.landing-footer')
 
 </body>
 

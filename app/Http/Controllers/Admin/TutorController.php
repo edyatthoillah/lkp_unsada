@@ -1,9 +1,11 @@
 <?php
+
 namespace App\Http\Controllers\admin;
-use App\Models\Tutor;
-use Illuminate\Support\Facades\Storage;
+
 use App\Http\Controllers\Controller;
+use App\Models\Tutor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class TutorController extends Controller
 {
@@ -18,6 +20,7 @@ class TutorController extends Controller
     public function index()
     {
         $tutors = Tutor::latest()->get();
+
         return view('admin.tutors.index', compact('tutors'));
     }
 

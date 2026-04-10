@@ -14,6 +14,7 @@ class ProgramController extends Controller
     public function index()
     {
         $programs = Program::latest()->get();
+
         return view('admin.program.index', compact('programs'));
     }
 
@@ -31,8 +32,8 @@ class ProgramController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'  => 'required|string|max:255',
-            'icon'  => 'nullable|string|max:255',
+            'name' => 'required|string|max:255',
+            'icon' => 'nullable|string|max:255',
             'color' => 'required|string|max:7',
         ]);
 
@@ -51,11 +52,11 @@ class ProgramController extends Controller
     }
 
     public function show($id)
-{
-    $program = Program::with('details')->findOrFail($id);
+    {
+        $program = Program::with('details')->findOrFail($id);
 
-    return view('admin.program.detail', compact('program'));
-}
+        return view('admin.program.detail', compact('program'));
+    }
 
     /**
      * Update the specified resource in storage.
@@ -63,8 +64,8 @@ class ProgramController extends Controller
     public function update(Request $request, Program $program)
     {
         $request->validate([
-            'name'  => 'required|string|max:255',
-            'icon'  => 'nullable|string|max:255',
+            'name' => 'required|string|max:255',
+            'icon' => 'nullable|string|max:255',
             'color' => 'required|string|max:7',
         ]);
 

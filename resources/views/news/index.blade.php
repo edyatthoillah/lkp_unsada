@@ -94,8 +94,7 @@
 
 
 
-    <!-- Footer -->
-    @include('layouts.footer')
+    @include('layouts.landing-footer')
 
 
 

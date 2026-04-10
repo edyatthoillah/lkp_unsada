@@ -1,15 +1,15 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
-use App\Http\Controllers\Admin\NewsController;
-use App\Http\Controllers\Admin\TutorController;
-use App\Http\Controllers\Admin\ProgramController;
-use App\Http\Controllers\Admin\TestimonialController;
-use App\Http\Controllers\Admin\GalleryController;
-use App\Http\Controllers\Admin\ServicesController;
-use App\Http\Controllers\Admin\FacilitiesController;
 use App\Http\Controllers\Admin\DetailProgramController;
+use App\Http\Controllers\Admin\FacilitiesController;
+use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\LandingpageController;
+use App\Http\Controllers\Admin\NewsController;
+use App\Http\Controllers\Admin\ProgramController;
+use App\Http\Controllers\Admin\ServicesController;
+use App\Http\Controllers\Admin\TestimonialController;
+use App\Http\Controllers\Admin\TutorController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SuperAdmin\SuperAdminController;
 use App\Http\Controllers\TwoFactorController;
@@ -106,9 +106,6 @@ Route::get('/news/{slug}', [NewsController::class, 'show'])
 Route::get('/news', [NewsController::class, 'landingnews'])->name('blogs');
 Route::get('/pengajar', [TutorController::class, 'tutors'])->name('tutors');
 Route::get('/program', [DetailProgramController::class, 'programs'])->name('programs');
-
-Route::get('/fasilitas', function () {
-    return view('facilities');
-})->name('facilities');
+Route::get('/fasilitas', [FacilitiesController::class, 'facilities'])->name('facilities');
 
 require __DIR__.'/auth.php';

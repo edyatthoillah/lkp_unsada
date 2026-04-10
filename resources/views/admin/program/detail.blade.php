@@ -42,17 +42,17 @@
                     <ol class="inline-flex items-center space-x-1">
 
                         <li class="inline-flex items-center">
-                            <a href="/" class="hover:text-blue-600">Dashboard</a>
+                            <a href="{{ route('admin.dashboard') }}" class="hover:text-blue-600">Dashboard</a>
                         </li>
 
                         <li>
                             <span class="mx-1">/</span>
-                            <a href="/news" class="hover:text-blue-600">News</a>
+                            <a href="{{ route('admin.program.index') }}" class="hover:text-blue-600">Program</a>
                         </li>
 
                         <li>
                             <span class="mx-1">/</span>
-                            <span class="text-gray-700 font-medium">Create</span>
+                            <span class="text-gray-700 font-medium">Detail</span>
                         </li>
 
                     </ol>

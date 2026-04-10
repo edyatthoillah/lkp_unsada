@@ -3,15 +3,21 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Facility;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class FacilitiesController extends Controller
 {
+    public function facilities(){
+        $facilities = Facility::latest()->get();
+        return view('facilities', compact('facilities'));
+    }
+
     public function index()
     {
         $facilities = Facility::latest()->get();
+
         return view('admin.facilities.index', compact('facilities'));
     }
 
@@ -24,7 +30,7 @@ class FacilitiesController extends Controller
     {
         $request->validate([
             'image' => 'required|image|mimes:jpg,jpeg,png|max:2048',
-            'description' => 'required'
+            'description' => 'required',
         ]);
 
         $imagePath = $request->file('image')->store('facilities', 'public');
@@ -41,6 +47,7 @@ class FacilitiesController extends Controller
     public function edit($id)
     {
         $facility = Facility::findOrFail($id);
+
         return view('admin.facilities.edit', compact('facility'));
     }
 
@@ -50,7 +57,7 @@ class FacilitiesController extends Controller
 
         $request->validate([
             'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-            'description' => 'required'
+            'description' => 'required',
         ]);
 
         if ($request->hasFile('image')) {

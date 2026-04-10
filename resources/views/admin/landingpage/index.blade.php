@@ -42,12 +42,12 @@
                     <ol class="inline-flex items-center space-x-1">
 
                         <li class="inline-flex items-center">
-                            <a href="/" class="hover:text-blue-600">Dashboard</a>
+                            <a href="{{ route('admin.dashboard') }}" class="hover:text-blue-600">Dashboard</a>
                         </li>
 
                         <li>
                             <span class="mx-1">/</span>
-                            <a href="/news" class="hover:text-blue-600">Landing Page</a>
+                            <a href="#" class="hover:text-blue-600">Landing Page</a>
                         </li>
 
                         <li>
@@ -71,7 +71,7 @@
                                             <!-- Kembali -->
                                             <!-- Kembali -->
                                             <a href="{{ route('admin.dashboard') }}"
-                                                class="flex items-center gap-1 bg-cyan-500 hover:bg-cyan-600 text-white text-xs px-3 py-1 border border-cyan-600 leading-none">
+                                                class="flex items-center gap-1 bg-cyan-500 hover:bg-cyan-600 text-white text-xs px-3 py-2 border border-cyan-600 leading-none">
                                                 <span>Kembali ke Dashboard</span>
                                             </a>
                                         </div>

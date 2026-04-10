@@ -1,10 +1,8 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-
 use App\Models\Testimonial;
 use Illuminate\Http\Request;
 

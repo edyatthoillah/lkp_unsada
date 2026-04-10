@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Service;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
 
 class ServicesController extends Controller
 {
@@ -13,6 +12,7 @@ class ServicesController extends Controller
     public function index()
     {
         $services = Service::latest()->get();
+
         return view('admin.services.index', compact('services'));
     }
 
@@ -47,6 +47,7 @@ class ServicesController extends Controller
     public function edit($id)
     {
         $service = Service::findOrFail($id);
+
         return view('admin.services.edit', compact('service'));
     }
 
@@ -77,7 +78,7 @@ class ServicesController extends Controller
     public function destroy($id)
     {
         $service = Service::findOrFail($id);
-        
+
         $service->delete();
 
         return redirect()->route('admin.services.index')

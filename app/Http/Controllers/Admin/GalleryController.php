@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Gallery;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class GalleryController extends Controller
@@ -12,6 +12,7 @@ class GalleryController extends Controller
     public function index()
     {
         $galleries = Gallery::latest()->get();
+
         return view('admin.galery.index', compact('galleries'));
     }
 

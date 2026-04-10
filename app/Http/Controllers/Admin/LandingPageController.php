@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\News;
-use App\Models\Testimonial;
-use App\Models\LandingPage;
-use App\Models\Gallery;
-use App\Models\Service;
 use App\Http\Controllers\Controller;
+use App\Models\Gallery;
+use App\Models\LandingPage;
+use App\Models\News;
+use App\Models\Service;
+use App\Models\Testimonial;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 
 class LandingPageController extends Controller
 {
@@ -21,12 +20,14 @@ class LandingPageController extends Controller
         $news = News::latest()->paginate(10);
         $galleries = Gallery::latest()->get();
         $services = Service::get();
+
         return view('welcome', compact('news', 'testimonials', 'landing', 'galleries', 'services'));
     }
 
     public function adminindex()
     {
         $landing = LandingPage::first();
+
         return view('admin.landingpage.index', compact('landing'));
     }
 
