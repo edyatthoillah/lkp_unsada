@@ -58,7 +58,7 @@
 
             <!-- Image Kiri -->
             <div class="md:w-1/3 flex justify-center md:justify-start">
-                <img src="{{ asset('images/landingpage/about.jpg') }}" alt="Tentang Kami"
+                <img src="{{ asset('storage/' . $landing->foto_tentang_kami) }}" alt="Tentang Kami"
                     class="rounded-lg shadow-2xl w-full max-w-sm object-cover hover:scale-105 transition-transform duration-500">
             </div>
 

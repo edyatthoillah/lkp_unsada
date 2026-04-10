@@ -5,28 +5,29 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\PermissionRegistrar;
 
 class RolePermissionSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        Permission::create(['name' => 'view articles']);
-        Permission::create(['name' => 'create articles']);
-        Permission::create(['name' => 'edit articles']);
-        Permission::create(['name' => 'delete articles']);
+        // 🔥 WAJIB: reset cache dulu
+        app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
-        // Create roles and assign permissions
-        $user = Role::create(['name' => 'user']);
+        // Permissions
+        Permission::firstOrCreate(['name' => 'view articles']);
+        Permission::firstOrCreate(['name' => 'create articles']);
+        Permission::firstOrCreate(['name' => 'edit articles']);
+        Permission::firstOrCreate(['name' => 'delete articles']);
+
+        // Roles
+        $user = Role::firstOrCreate(['name' => 'user']);
+        $admin = Role::firstOrCreate(['name' => 'admin']);
+        $superadmin = Role::firstOrCreate(['name' => 'superadmin']);
+
+        // Assign permission
         $user->givePermissionTo(['view articles', 'create articles', 'edit articles']);
-
-        $admin = Role::create(['name' => 'admin']);
         $admin->givePermissionTo(Permission::all());
-
-        $superadmin = Role::create(['name' => 'superadmin']);
         $superadmin->givePermissionTo(Permission::all());
-
     }
 }

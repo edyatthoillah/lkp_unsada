@@ -6,8 +6,7 @@
             <div class="flex flex-col items-start space-y-4">
                 <img src="{{ asset('storage/' . $landing->logo) }}" alt="Logo LKP Unsada" class="w-24">
                 <p class="text-gray-300 text-sm leading-relaxed">
-                    LKP UNSADA membekali peserta dengan keterampilan, bahasa, dan sertifikasi profesional untuk
-                    meningkatkan kompetensi, karier, dan daya saing di dunia kerja.
+                    {{ $landing->footer_deskripsi }}
                 </p>
                 <!-- Sosial Media -->
                 <div class="flex space-x-4 mt-2">
