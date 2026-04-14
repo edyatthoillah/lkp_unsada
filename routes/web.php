@@ -4,7 +4,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\DetailProgramController;
 use App\Http\Controllers\Admin\FacilitiesController;
 use App\Http\Controllers\Admin\GalleryController;
-use App\Http\Controllers\Admin\LandingpageController;
+use App\Http\Controllers\Admin\LandingPageController;
 use App\Http\Controllers\Admin\NewsController;
 use App\Http\Controllers\Admin\ProgramController;
 use App\Http\Controllers\Admin\ServicesController;

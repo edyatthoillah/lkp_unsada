@@ -1,26 +1,3 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>{{ config('app.name', 'LKP Unsada') }}</title>
-
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-    <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-
-<div id="sakura-container" class="fixed top-0 left-0 w-full h-full pointer-events-none z-50"></div>
-
-<body class="bg-gray-50">
-
     @include('layouts.header')
 
     <!-- HERO SECTION -->
@@ -79,9 +56,6 @@
         </div>
     </section>
 
-
-    <!-- Layanan Section -->
-    {{-- bg-gray-50 --}}
     <section id="layanan" class="bg-gradient-to-r from-purple-800/20 via-gray-50 to-purple-800/20">
         <div class="max-w-7xl mx-auto px-4 text-center">
             <!-- Judul Section -->
@@ -131,11 +105,6 @@
 
     <section class=" bg-gradient-to-r from-purple-800/20 via-gray-50 to-purple-800/20 py-20">
         <div class="max-w-5xl mx-auto text-center px-6">
-
-            {{-- <h2 class="text-3xl font-bold text-gray-900">
-                Galeri Kegiatan <br>
-                Lembaga Kursus dan Pelatihan (LKP) Unsada
-            </h2> --}}
             <h2 class="text-3xl sm:text-4xl font-extrabold mb-4 text-gray-800 relative inline-block">
                 <span class="bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600">
                     Galeri Kegiatan <br>
@@ -146,10 +115,6 @@
             <p class="text-gray-600 max-w-2xl mx-auto text-lg sm:text-xl leading-relaxed">
                 Galeri kegiatan LKP UNSADA – Intip momen belajar seru peserta kami.
             </p>
-
-            {{-- <p class="text-gray-500 max-w-2xl mx-auto mt-4 mb-12">
-                Galeri kegiatan LKP UNSADA – Intip momen belajar seru peserta kami.
-            </p> --}}
 
             <div class="relative h-[320px] flex items-center justify-center overflow-hidden">
 
@@ -289,15 +254,10 @@
                                     <p class="text-sm text-gray-500">
                                         {{ $item->position }}
                                     </p>
-
-
                                 </div>
-
                             </div>
-
                         </div>
                     @endforeach
-
                 </div>
             </div>
 
@@ -329,15 +289,11 @@
                     Lembaga Kursus dan Pelatihan (LKP) Unsada
                 </h2>
             </div>
-
             <!-- Grid -->
             <div class="grid lg:grid-cols-3 gap-10">
-
                 <!-- BLOG BESAR -->
                 <div class="lg:col-span-2 overflow-x-auto scrollbar-hide scroll-smooth">
-
                     <div class="grid grid-flow-col grid-rows-1 auto-cols-[48%] gap-8 min-w-full snap-x snap-mandatory">
-
                         @foreach ($news as $item)
                             <!-- Card -->
                             <div class="bg-white rounded-lg shadow-sm overflow-hidden snap-start">
@@ -349,28 +305,21 @@
                                         <span>🕒</span>
                                         <span class="ml-2">{{ $item->created_at->format('d-m-Y') }}</span>
                                     </div>
-
                                     <h3 class="font-semibold text-gray-900 mb-3">
                                         {{ $item->news_title }}
                                     </h3>
-
                                     <p class="text-gray-500 text-sm mb-4">
                                         {{ Str::limit(strip_tags(html_entity_decode($item->news_content)), 120) }}
                                     </p>
-
                                     <a href="{{ route('news.show', $item->slug) }}"
                                         class="text-red-500 text-sm font-medium">
                                         Baca Selengkapnya →
                                     </a>
-
                                 </div>
                             </div>
                         @endforeach
-
                     </div>
-
                 </div>
-
                 <!-- SIDEBAR WRAPPER -->
                 <div class="flex flex-col h-[500px]">
 
@@ -468,7 +417,7 @@
                     <div class="absolute -left-5 top-1/2 -translate-y-1/2 bg-white p-2 rounded-full shadow-lg">
                         <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" class="w-7 h-7">
                     </div>
-                    <a href="mailto:{{ $landing->email }}"
+                    <a href="mailto:{{ $landing->email }}?subject=Konsultasi%20LKP%20Unsada&body=Halo,%20saya%20ingin%20bertanya%20tentang%20program..."
                         class="bg-blue-500 text-white pl-10 pr-6 py-3 rounded-lg
                         shadow-xl ring-1 ring-black/5
                         hover:bg-blue-600 hover:shadow-2xl
@@ -480,9 +429,8 @@
         </div>
     </section>
 
-@include('layouts.landing-footer')
+    @include('layouts.landing-footer')
 
-    <!-- Floating WhatsApp Button -->
     <!-- Floating WhatsApp Button -->
     <a href="https://wa.me/{{ $landing->whatsapp }}?text=Saya%20ingin%20informasi%20LKP%20Universitas%20Darma%20Persada"
         target="_blank"
@@ -545,53 +493,53 @@
 
         window.addEventListener("resize", updateSlider)
     </script>
-</body>
-</div>
+    </body>
+    </div>
 
-<style>
-    .sakura {
-        position: absolute;
-        width: 20px;
-        height: 20px;
-        background-image: url('images/landingpage/sakura.png');
-        /* gambar sakura kecil */
-        background-size: contain;
-        background-repeat: no-repeat;
-        animation-name: fall;
-        animation-timing-function: linear;
-        animation-iteration-count: infinite;
-    }
-
-    @keyframes fall {
-        0% {
-            transform: translateY(-50px) rotate(0deg);
-            opacity: 1;
+    <style>
+        .sakura {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-image: url('images/landingpage/sakura.png');
+            /* gambar sakura kecil */
+            background-size: contain;
+            background-repeat: no-repeat;
+            animation-name: fall;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
         }
 
-        100% {
-            transform: translateY(100vh) rotate(360deg);
-            opacity: 0.8;
+        @keyframes fall {
+            0% {
+                transform: translateY(-50px) rotate(0deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0.8;
+            }
         }
-    }
-</style>
+    </style>
 
-<script>
-    const container = document.getElementById('sakura-container');
-    const numberOfSakura = 20; // bisa diubah sesuai banyak daun
+    <script>
+        const container = document.getElementById('sakura-container');
+        const numberOfSakura = 20; // bisa diubah sesuai banyak daun
 
-    for (let i = 0; i < numberOfSakura; i++) {
-        const leaf = document.createElement('div');
-        leaf.classList.add('sakura');
+        for (let i = 0; i < numberOfSakura; i++) {
+            const leaf = document.createElement('div');
+            leaf.classList.add('sakura');
 
-        // posisi awal acak
-        leaf.style.left = Math.random() * 100 + 'vw';
-        leaf.style.animationDuration = (5 + Math.random() * 5) + 's'; // 5-10 detik
-        leaf.style.animationDelay = Math.random() * 5 + 's';
-        leaf.style.width = (15 + Math.random() * 20) + 'px';
-        leaf.style.height = leaf.style.width;
+            // posisi awal acak
+            leaf.style.left = Math.random() * 100 + 'vw';
+            leaf.style.animationDuration = (5 + Math.random() * 5) + 's'; // 5-10 detik
+            leaf.style.animationDelay = Math.random() * 5 + 's';
+            leaf.style.width = (15 + Math.random() * 20) + 'px';
+            leaf.style.height = leaf.style.width;
 
-        container.appendChild(leaf);
-    }
-</script>
+            container.appendChild(leaf);
+        }
+    </script>
 
-</html>
+    </html>

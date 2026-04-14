@@ -18,44 +18,99 @@ class GalleryController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'image' => 'required|image|mimes:jpg,jpeg,png|max:2048',
-        ]);
+        try {
+            // VALIDASI
+            $validated = $request->validate([
+                'image' => 'required|image|mimes:jpg,jpeg,png|max:2048',
+            ]);
 
-        $imagePath = $request->file('image')->store('gallery', 'public');
+            // CEK FILE ADA ATAU TIDAK
+            if (! $request->hasFile('image')) {
+                return redirect()->back()->with('error', 'File gambar tidak ditemukan');
+            }
 
-        Gallery::create([
-            'image' => $imagePath,
-        ]);
+            // UPLOAD FILE
+            $imagePath = $request->file('image')->store('gallery', 'public');
 
-        return redirect()->back()->with('success', 'Gambar berhasil ditambahkan');
+            if (! $imagePath) {
+                return redirect()->back()->with('error', 'Gagal upload gambar');
+            }
+
+            // SIMPAN KE DATABASE
+            Gallery::create([
+                'image' => $imagePath,
+            ]);
+
+            return redirect()->back()->with('success', 'Gambar berhasil ditambahkan');
+
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            // ERROR VALIDASI
+            return redirect()->back()
+                ->withErrors($e->validator)
+                ->withInput();
+
+        } catch (\Exception $e) {
+            // ERROR UMUM
+            return redirect()->back()
+                ->with('error', 'Terjadi kesalahan: '.$e->getMessage());
+        }
     }
 
     public function update(Request $request, $id)
     {
-        $gallery = Gallery::findOrFail($id);
+        try {
+            // AMBIL DATA
+            $gallery = Gallery::findOrFail($id);
 
-        $request->validate([
-            'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-        ]);
+            // VALIDASI
+            $validated = $request->validate([
+                'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            ]);
 
-        if ($request->hasFile('image')) {
+            $imagePath = $gallery->image;
 
-            // hapus gambar lama
-            if ($gallery->image && Storage::disk('public')->exists($gallery->image)) {
-                Storage::disk('public')->delete($gallery->image);
+            // CEK JIKA ADA FILE BARU
+            if ($request->hasFile('image')) {
+
+                // HAPUS GAMBAR LAMA
+                if ($gallery->image && \Storage::disk('public')->exists($gallery->image)) {
+                    \Storage::disk('public')->delete($gallery->image);
+                }
+
+                // UPLOAD GAMBAR BARU
+                $uploaded = $request->file('image')->store('gallery', 'public');
+
+                if (! $uploaded) {
+                    return redirect()->back()->with('error', 'Gagal upload gambar baru');
+                }
+
+                $imagePath = $uploaded;
             }
 
-            $imagePath = $request->file('image')->store('gallery', 'public');
-        } else {
-            $imagePath = $gallery->image;
+            // UPDATE DATA
+            $gallery->update([
+                'image' => $imagePath,
+            ]);
+
+            return redirect()->back()->with('success', 'Gambar berhasil diupdate');
+
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            // DATA TIDAK DITEMUKAN
+            return redirect()->back()->with('error', 'Data tidak ditemukan');
+
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            // ERROR VALIDASI
+            return redirect()->back()
+                ->withErrors($e->validator)
+                ->withInput();
+
+        } catch (\Exception $e) {
+            // ERROR UMUM
+            \Log::error($e->getMessage());
+
+            return redirect()->back()
+                ->with('error', 'Terjadi kesalahan saat update gambar');
         }
-
-        $gallery->update([
-            'image' => $imagePath,
-        ]);
-
-        return redirect()->back()->with('success', 'Gambar berhasil diupdate');
     }
 
     public function destroy($id)

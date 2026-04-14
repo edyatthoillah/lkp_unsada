@@ -66,7 +66,7 @@
                             <div x-data="previewModalAdd()" @keydown.escape.window="show = false">
                                 <div class="mb-4">
                                     <div class="flex justify-between items-center mb-3">
-                                        <h2 class="font-semibold text-gray-700 text-md">News & Update</h2>
+                                        <h2 class="font-semibold text-gray-700 text-md">Progam LKP Unsada</h2>
                                         <div class="flex gap-1">
                                             <!-- Kembali -->
                                             <a href="{{ route('admin.dashboard') }}"

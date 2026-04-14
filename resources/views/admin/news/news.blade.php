@@ -66,7 +66,7 @@
 
 
                                     <!-- Header & Add Button -->
-                                   <div class="flex justify-between items-center mb-3">
+                                    <div class="flex justify-between items-center mb-3">
                                         <h2 class="font-semibold text-gray-700 text-md">News & Update</h2>
                                         <div class="flex gap-1">
                                             <!-- Kembali -->
@@ -86,109 +86,156 @@
                                         </div>
                                     </div>
 
-                                    <div x-show="show" x-transition
-                                        class="fixed inset-0 bg-black/40 z-50 flex items-start justify-center p-4 overflow-y-auto">
+                                    <div x-data="{ preview: null }" >
 
-                                        <div
-                                            class="bg-white rounded-lg shadow-md w-full max-w-md max-h-screen overflow-y-auto relative">
-                                            <!-- Header -->
-                                            <div class="flex items-center justify-between p-4 border-b">
-                                                <h2 class="text-base font-semibold">Tambah Berita</h2>
-                                                <!-- Button Close -->
-                                                <button @click="show = false"
-                                                    class="text-gray-400 hover:text-gray-600 text-xl leading-none">
-                                                    &times;
-                                                </button>
-                                            </div>
-                                            <script>
-                                                document.addEventListener("DOMContentLoaded", function() {
+                                        <div x-show="show" x-transition
+                                            class="fixed inset-0 bg-black/40 z-50 flex items-start justify-center p-4 overflow-y-auto">
 
-                                                    const quill = new Quill('#editor', {
-                                                        theme: 'snow',
-                                                        placeholder: 'Tulis isi berita di sini...',
-                                                        modules: {
-                                                            toolbar: [
-                                                                [{
-                                                                    header: [1, 2, 3, false]
-                                                                }],
-                                                                ['bold', 'italic', 'underline'],
-                                                                ['link', 'image'],
-                                                                [{
-                                                                    list: 'ordered'
-                                                                }, {
-                                                                    list: 'bullet'
-                                                                }],
-                                                                ['clean']
-                                                            ]
-                                                        }
-                                                    });
+                                            <div
+                                                class="bg-white rounded-lg shadow-md w-full max-w-md max-h-screen overflow-y-auto relative">
 
-                                                    const form = document.querySelector("#newsForm");
+                                                <!-- Header -->
+                                                <div class="flex items-center justify-between p-4 border-b">
+                                                    <h2 class="text-base font-semibold">Tambah Berita</h2>
+                                                    <button @click="show = false"
+                                                        class="text-gray-400 hover:text-gray-600 text-xl leading-none">
+                                                        &times;
+                                                    </button>
+                                                </div>
 
-                                                    form.addEventListener("submit", function() {
-                                                        document.querySelector("#news_content").value = quill.root.innerHTML;
-                                                    });
+                                                <!-- Content -->
+                                                <div class="p-4">
 
-                                                });
-                                            </script>
-                                            <div class="p-4">
-                                                <form id="newsForm" action="{{ route('admin.news.store') }}"
-                                                    method="POST" enctype="multipart/form-data" class="space-y-4">
-                                                    @csrf
 
-                                                    {{-- Thumbnail --}}
-                                                    <div class="grid grid-cols-2 md:grid-cols-2 gap-4">
-                                                        <div>
-                                                            <x-input-label value="Thumbnail" class="text-sm" />
-                                                            <input type="file" name="thumbnail"
-                                                                class="mt-1 block w-full text-sm border-gray-300 rounded-md shadow-sm">
+
+                                                    <form id="newsForm" action="{{ route('admin.news.store') }}"
+                                                        method="POST" enctype="multipart/form-data" class="space-y-4">
+                                                        @csrf
+
+                                                        <!-- Thumbnail + Status -->
+                                                        <div class="grid grid-cols-2 gap-4">
+
+                                                            <!-- Thumbnail -->
+                                                            <div>
+                                                                <x-input-label value="Thumbnail" class="text-sm" />
+                                                                <input type="file" name="thumbnail"
+                                                                    @change="preview = URL.createObjectURL($event.target.files[0])"
+                                                                    class="mt-1 block w-full text-sm border-gray-300 rounded-md shadow-sm">
+
+                                                                @error('thumbnail')
+                                                                    <p class="text-red-500 text-xs mt-1">{{ $message }}
+                                                                    </p>
+                                                                @enderror
+
+                                                                <!-- Preview -->
+                                                                <img x-show="preview" :src="preview"
+                                                                    class="mt-2 h-20 rounded border object-cover">
+                                                            </div>
+
+                                                            <!-- Status -->
+                                                            <div>
+                                                                <x-input-label value="Status" class="text-sm" />
+                                                                <select name="status"
+                                                                    class="mt-1 block w-full text-sm border-gray-300 rounded-md shadow-sm py-1.5">
+                                                                    <option value="draft"
+                                                                        {{ old('status') == 'draft' ? 'selected' : '' }}>
+                                                                        Draft</option>
+                                                                    <option value="publish"
+                                                                        {{ old('status') == 'publish' ? 'selected' : '' }}>
+                                                                        Publish</option>
+                                                                </select>
+
+                                                                @error('status')
+                                                                    <p class="text-red-500 text-xs mt-1">
+                                                                        {{ $message }}</p>
+                                                                @enderror
+                                                            </div>
                                                         </div>
+
+                                                        <!-- Judul -->
                                                         <div>
-                                                            <x-input-label value="Status" class="text-sm" />
-                                                            <select name="status"
-                                                                class="mt-1 block w-full text-sm border-gray-300 rounded-md shadow-sm py-1.5">
-                                                                <option value="draft">Draft</option>
-                                                                <option value="publish">Publish</option>
-                                                            </select>
+                                                            <x-input-label value="Judul Berita" class="text-sm" />
+                                                            <x-text-input name="news_title"
+                                                                value="{{ old('news_title') }}"
+                                                                class="block mt-1 w-full text-sm py-1.5 px-2" />
+
+                                                            @error('news_title')
+                                                                <p class="text-red-500 text-xs mt-1">{{ $message }}
+                                                                </p>
+                                                            @enderror
                                                         </div>
-                                                    </div>
 
-                                                    {{-- Judul --}}
-                                                    <div>
-                                                        <x-input-label value="Judul Berita" class="text-sm" />
-                                                        <x-text-input name="news_title"
-                                                            class="block mt-1 w-full text-sm py-1.5 px-2" required />
-                                                    </div>
+                                                        <!-- Isi -->
+                                                        <div>
+                                                            <x-input-label value="Isi Berita" class="text-sm" />
 
-                                                    {{-- Isi --}}
-                                                    <div>
-                                                        <x-input-label value="Isi Berita" class="text-sm" />
+                                                            <!-- Editor -->
+                                                            <div id="editor" class="bg-white border rounded-md"
+                                                                style="height:180px;"></div>
 
-                                                        <!-- Editor Quill -->
-                                                        <div id="editor" class="bg-white border rounded-md"
-                                                            style="height:180px;"></div>
+                                                            <textarea name="news_content" id="news_content" hidden>{{ old('news_content') }}</textarea>
 
-                                                        <!-- textarea untuk kirim ke Laravel -->
-                                                        <textarea name="news_content" id="news_content" hidden></textarea>
-                                                    </div>
+                                                            @error('news_content')
+                                                                <p class="text-red-500 text-xs mt-1">{{ $message }}
+                                                                </p>
+                                                            @enderror
+                                                        </div>
 
-                                                    {{-- Status --}}
+                                                        <!-- ACTION -->
+                                                        <div class="flex justify-end gap-2 pt-2">
+                                                            <button type="button" @click="show=false"
+                                                                class="bg-gray-400 hover:bg-gray-500 text-white text-sm px-3 py-1.5 rounded-md">
+                                                                Close
+                                                            </button>
 
-
-                                                    <div class="flex justify-end gap-2 pt-2">
-                                                        <button type="button" @click="show=false"
-                                                            class="bg-gray-400 hover:bg-gray-500 text-white text-sm px-3 py-1.5 rounded-md transition">
-                                                            Close
-                                                        </button>
-                                                        <button type="submit"
-                                                            class="bg-blue-600 hover:bg-blue-700 text-white text-sm px-3 py-1.5 rounded-md transition">
-                                                            Simpan
-                                                        </button>
-                                                    </div>
-                                                </form>
+                                                            <button type="submit"
+                                                                class="bg-blue-600 hover:bg-blue-700 text-white text-sm px-3 py-1.5 rounded-md">
+                                                                Simpan
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                </div>
                                             </div>
-
                                         </div>
+
+                                        <!-- SCRIPT QUILL -->
+                                        <script>
+                                            document.addEventListener("DOMContentLoaded", function() {
+
+                                                const quill = new Quill('#editor', {
+                                                    theme: 'snow',
+                                                    placeholder: 'Tulis isi berita di sini...',
+                                                    modules: {
+                                                        toolbar: [
+                                                            [{
+                                                                header: [1, 2, 3, false]
+                                                            }],
+                                                            ['bold', 'italic', 'underline'],
+                                                            ['link', 'image'],
+                                                            [{
+                                                                list: 'ordered'
+                                                            }, {
+                                                                list: 'bullet'
+                                                            }],
+                                                            ['clean']
+                                                        ]
+                                                    }
+                                                });
+
+                                                // SET OLD VALUE (biar tidak kosong saat error)
+                                                const oldContent = document.querySelector("#news_content").value;
+                                                if (oldContent) {
+                                                    quill.root.innerHTML = oldContent;
+                                                }
+
+                                                const form = document.querySelector("#newsForm");
+
+                                                form.addEventListener("submit", function() {
+                                                    document.querySelector("#news_content").value = quill.root.innerHTML;
+                                                });
+
+                                            });
+                                        </script>
                                     </div>
                                 </div>
 
@@ -209,7 +256,8 @@
                                         <tbody>
                                             @foreach ($news as $data)
                                                 <tr class="hover:bg-gray-50">
-                                                    <td class="text-center px-3 py-2 border">{{ $loop->iteration }}</td>
+                                                    <td class="text-center px-3 py-2 border">{{ $loop->iteration }}
+                                                    </td>
                                                     <td class="px-3 py-2 border">
                                                         <img src="{{ asset('storage/' . $data->thumbnail) }}"
                                                             class="h-20 rounded">
@@ -221,16 +269,17 @@
                                                         <div class="inline-flex">
                                                             <button
                                                                 @click="openModal({
-                                                            id: @js($data->id),
-                                                            title: @js($data->news_title),
-                                                            content: @js($data->news_content),
-                                                            status: @js($data->status),
-                                                            thumbnail: @js(asset('storage/' . $data->thumbnail))
-                                                        })"
+        id: @js($data->id),
+        news_title: @js($data->news_title),
+        news_content: @js($data->news_content),
+        status: @js($data->status),
+        thumbnail: @js($data->thumbnail)
+    })"
                                                                 class="px-3 py-1 text-xs bg-yellow-500 hover:bg-yellow-600 text-white border border-yellow-700 rounded-l transition">
                                                                 Edit
                                                             </button>
-                                                            <form action="{{ route('admin.news.destroy', $data->id) }}"
+                                                            <form
+                                                                action="{{ route('admin.news.destroy', $data->id) }}"
                                                                 method="POST"
                                                                 onsubmit="return confirm('Yakin ingin menghapus berita ini?')">
                                                                 @csrf
@@ -249,16 +298,14 @@
                                     <div x-show="show" x-transition
                                         class="fixed inset-0 bg-black/40 z-50 flex items-start justify-center p-4 overflow-y-auto">
 
-                                        <div
+                                        <div @click.away="show = false"
                                             class="bg-white rounded-lg shadow-md w-full max-w-md max-h-screen overflow-y-auto relative">
+
                                             <!-- Header -->
                                             <div class="flex items-center justify-between p-4 border-b">
                                                 <h2 class="text-base font-semibold">Edit Berita</h2>
-                                                <!-- Button Close -->
                                                 <button @click="show = false"
-                                                    class="text-gray-400 hover:text-gray-600 text-xl leading-none">
-                                                    &times;
-                                                </button>
+                                                    class="text-gray-400 hover:text-gray-600 text-xl">&times;</button>
                                             </div>
 
                                             <!-- Content -->
@@ -267,18 +314,22 @@
                                                     class="space-y-4">
                                                     @csrf
                                                     @method('PUT')
-                                                    <input type="hidden" id="news_id">
 
-                                                    <div class="grid grid-cols-2 md:grid-cols-2 gap-4">
+                                                    <div class="grid grid-cols-2 gap-4">
 
-                                                        {{-- Thumbnail --}}
+                                                        <!-- Thumbnail -->
                                                         <div>
                                                             <x-input-label value="Thumbnail" class="text-sm" />
                                                             <input type="file" name="thumbnail"
                                                                 class="mt-1 block w-full text-sm border-gray-300 rounded-md shadow-sm">
+
+                                                            @error('thumbnail')
+                                                                <p class="text-red-500 text-xs mt-1">{{ $message }}
+                                                                </p>
+                                                            @enderror
                                                         </div>
 
-                                                        {{-- Status --}}
+                                                        <!-- Status -->
                                                         <div>
                                                             <x-input-label value="Status" class="text-sm" />
                                                             <select id="edit_status" name="status"
@@ -286,39 +337,55 @@
                                                                 <option value="draft">Draft</option>
                                                                 <option value="publish">Publish</option>
                                                             </select>
+
+                                                            @error('status')
+                                                                <p class="text-red-500 text-xs mt-1">{{ $message }}
+                                                                </p>
+                                                            @enderror
                                                         </div>
 
                                                     </div>
 
-                                                    {{-- Judul --}}
+                                                    <!-- Judul -->
                                                     <div>
                                                         <x-input-label value="Judul Berita" class="text-sm" />
                                                         <x-text-input id="edit_title" name="news_title"
                                                             class="block mt-1 w-full text-sm py-1.5 px-2" />
+
+                                                        @error('news_title')
+                                                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                                        @enderror
                                                     </div>
 
-                                                    {{-- Isi --}}
+                                                    <!-- Isi -->
                                                     <div>
                                                         <x-input-label value="Isi Berita" />
 
-                                                        <div id="editEditor" style="height:200px"></div>
+                                                        <div id="editEditor" class="border rounded"
+                                                            style="height:200px"></div>
 
                                                         <textarea id="edit_news_content" name="news_content" hidden></textarea>
+
+                                                        @error('news_content')
+                                                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                                        @enderror
                                                     </div>
 
+                                                    <!-- Action -->
                                                     <div class="flex justify-end gap-2 pt-2">
                                                         <button type="button" @click="show=false"
-                                                            class="bg-gray-400 hover:bg-gray-500 text-white text-sm px-3 py-1.5 rounded-md transition">
+                                                            class="bg-gray-400 text-white text-sm px-3 py-1.5 rounded-md">
                                                             Close
                                                         </button>
+
                                                         <button type="submit"
-                                                            class="bg-blue-600 hover:bg-blue-700 text-white text-sm px-3 py-1.5 rounded-md transition">
+                                                            class="bg-blue-600 text-white text-sm px-3 py-1.5 rounded-md">
                                                             Edit
                                                         </button>
                                                     </div>
+
                                                 </form>
                                             </div>
-
                                         </div>
                                     </div>
 
@@ -328,58 +395,70 @@
                                                 show: false,
                                                 data: {},
                                                 quill: null,
+
                                                 init() {
                                                     this.$nextTick(() => {
-                                                        if (!this.quill) {
-                                                            this.quill = new Quill('#editEditor', {
-                                                                theme: 'snow',
-                                                                placeholder: 'Edit isi berita...',
-                                                                modules: {
-                                                                    toolbar: [
-                                                                        [{
-                                                                            header: [1, 2, 3, false]
-                                                                        }],
-                                                                        ['bold', 'italic', 'underline'],
-                                                                        ['link', 'image'],
-                                                                        [{
-                                                                            list: 'ordered'
-                                                                        }, {
-                                                                            list: 'bullet'
-                                                                        }],
-                                                                        ['clean']
-                                                                    ]
-                                                                }
-                                                            });
+                                                        this.quill = new Quill('#editEditor', {
+                                                            theme: 'snow',
+                                                            placeholder: 'Edit isi berita...',
+                                                            modules: {
+                                                                toolbar: [
+                                                                    [{
+                                                                        header: [1, 2, 3, false]
+                                                                    }],
+                                                                    ['bold', 'italic', 'underline'],
+                                                                    ['link', 'image'],
+                                                                    [{
+                                                                        list: 'ordered'
+                                                                    }, {
+                                                                        list: 'bullet'
+                                                                    }],
+                                                                    ['clean']
+                                                                ]
+                                                            }
+                                                        });
+
+                                                        // 🔥 HANDLE ERROR (ISI ULANG QUILL)
+                                                        const oldContent = document.getElementById("edit_news_content")?.value;
+                                                        if (oldContent) {
+                                                            this.quill.root.innerHTML = oldContent;
                                                         }
                                                     });
                                                 },
+
                                                 openModal(news) {
                                                     this.data = news;
                                                     this.show = true;
 
                                                     this.$nextTick(() => {
                                                         document.getElementById("editNewsForm").action = "/admin/news/" + news.id;
-                                                        document.getElementById("edit_title").value = news.title;
+
+                                                        document.getElementById("edit_title").value = news.news_title;
                                                         document.getElementById("edit_status").value = news.status;
 
-                                                        // 🔥 FIX QUILL (pakai dangerouslyPasteHTML)
                                                         if (this.quill) {
-                                                            this.quill.setContents([]); // reset dulu
-                                                            this.quill.clipboard.dangerouslyPasteHTML(news.content);
+                                                            this.quill.setContents([]);
+                                                            this.quill.clipboard.dangerouslyPasteHTML(news.news_content);
                                                         }
 
-                                                        document.getElementById("edit_news_content").value = news.content;
+                                                        document.getElementById("edit_news_content").value = news.news_content;
                                                     });
                                                 }
                                             }
                                         }
 
+                                        // SUBMIT QUILL
                                         document.addEventListener("DOMContentLoaded", function() {
                                             const form = document.getElementById("editNewsForm");
-                                            if (form) form.addEventListener("submit", function() {
-                                                const editor = document.querySelector('#editEditor .ql-editor');
-                                                if (editor) document.getElementById("edit_news_content").value = editor.innerHTML;
-                                            });
+
+                                            if (form) {
+                                                form.addEventListener("submit", function() {
+                                                    const editor = document.querySelector('#editEditor .ql-editor');
+                                                    if (editor) {
+                                                        document.getElementById("edit_news_content").value = editor.innerHTML;
+                                                    }
+                                                });
+                                            }
                                         });
                                     </script>
                                 </div>

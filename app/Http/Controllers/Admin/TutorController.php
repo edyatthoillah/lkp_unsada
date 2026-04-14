@@ -67,7 +67,7 @@ class TutorController extends Controller
 
         $tutor->update($data);
 
-        return redirect()->route('admin.tutor.index')->with('success-edit', 'Tutor berhasil diperbarui!');
+        return redirect()->route('admin.tutor.index')->with('successedit', 'Tutor berhasil diperbarui!');
     }
 
     // Hapus tutor
@@ -80,6 +80,6 @@ class TutorController extends Controller
 
         $tutor->delete();
 
-        return redirect()->route('admin.tutor.index')->with('success-hapus', 'Tutor berhasil dihapus!');
+        return redirect()->route('admin.tutor.index')->with('success', 'Data berhasil dihapus');
     }
 }

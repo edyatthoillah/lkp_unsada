@@ -46,7 +46,7 @@
 
                         <li>
                             <span class="mx-1">/</span>
-                            <a href="#" class="hover:text-blue-600">News</a>
+                            <a href="#" class="hover:text-blue-600">Services</a>
                         </li>
 
                         <li>
@@ -67,13 +67,17 @@
 
                                     <!-- Header & Add Button -->
                                     <div class="flex justify-between items-center mb-3">
-                                        <h2 class="font-semibold text-gray-700 text-md">News & Update</h2>
+                                        <h2 class="font-semibold text-gray-700 text-md">Layanan LKP Unsada</h2>
                                         <div class="flex gap-1">
                                             <!-- Kembali -->
                                             <!-- Kembali -->
                                             <a href="{{ route('admin.dashboard') }}"
                                                 class="flex items-center gap-1 bg-cyan-500 hover:bg-cyan-600 text-white text-xs px-3 py-1 border border-cyan-600 leading-none">
                                                 <span>Kembali ke Dashboard</span>
+                                            </a>
+                                            <a href="{{ url('https://fontawesome.com/icons') }}" target="_blank"
+                                                class="flex items-center gap-1 bg-yellow-500 hover:bg-yellow-600 text-white text-xs px-3 py-1 border border-cyan-600 leading-none">
+                                                <span>Icon Link</span>
                                             </a>
 
                                             <!-- Tambah -->

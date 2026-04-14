@@ -46,7 +46,7 @@
 
                         <li>
                             <span class="mx-1">/</span>
-                            <a href="#" class="hover:text-blue-600">News</a>
+                            <a href="#" class="hover:text-blue-600">Gallerys</a>
                         </li>
 
                         <li>
@@ -67,7 +67,7 @@
 
                                     <!-- Header & Add Button -->
                                     <div class="flex justify-between items-center mb-3">
-                                        <h2 class="font-semibold text-gray-700 text-md">News & Update</h2>
+                                        <h2 class="font-semibold text-gray-700 text-md">Galeri Kegiatan LKP Unsada</h2>
                                         <div class="flex gap-1">
                                             <!-- Kembali -->
                                             <!-- Kembali -->
@@ -87,44 +87,62 @@
                                     </div>
 
                                     <!-- Modal Tambah -->
-                                    <div x-show="showAdd" x-transition
-                                        class="fixed inset-0 bg-black/40 z-50 flex items-start justify-center p-4 overflow-y-auto">
+                                    <div x-data="{ preview: null }" >
 
-                                        <div class="bg-white rounded-lg shadow-md w-full max-w-md relative">
+                                        <div x-show="showAdd" x-transition
+                                            class="fixed inset-0 bg-black/40 z-50 flex items-start justify-center p-4 overflow-y-auto">
 
-                                            <!-- Header -->
-                                            <div class="flex items-center justify-between p-4 border-b">
-                                                <h2 class="text-base font-semibold">Tambah Gambar</h2>
-                                                <button @click="showAdd = false"
-                                                    class="text-gray-400 hover:text-gray-600 text-xl">&times;</button>
-                                            </div>
+                                            <div @click.away="showAdd = false"
+                                                class="bg-white rounded-lg shadow-md w-full max-w-md relative">
 
-                                            <!-- Content -->
-                                            <div class="p-4">
-                                                <form action="{{ route('admin.galery.store') }}" method="POST"
-                                                    enctype="multipart/form-data" class="space-y-4">
-                                                    @csrf
+                                                <!-- Header -->
+                                                <div class="flex items-center justify-between p-4 border-b">
+                                                    <h2 class="text-base font-semibold">Tambah Gambar</h2>
+                                                    <button @click="showAdd = false"
+                                                        class="text-gray-400 hover:text-gray-600 text-xl">&times;</button>
+                                                </div>
 
-                                                    <div>
-                                                        <x-input-label value="Upload Gambar" class="text-sm" />
-                                                        <input type="file" name="image"
-                                                            @change="preview = URL.createObjectURL($event.target.files[0])"
-                                                            class="mt-1 block w-full text-sm border-gray-300 rounded-md shadow-sm"
-                                                            required>
-                                                    </div>
+                                                <!-- Content -->
+                                                <div class="p-4">
 
-                                                    <!-- Preview -->
-                                                    <img x-show="preview" :src="preview"
-                                                        class="h-24 rounded border">
+                                                    <form action="{{ route('admin.galery.store') }}" method="POST"
+                                                        enctype="multipart/form-data" class="space-y-4">
+                                                        @csrf
 
-                                                    <div class="flex justify-end gap-2">
-                                                        <button type="button" @click="showAdd=false"
-                                                            class="bg-gray-400 text-white px-3 py-1.5 rounded">Close</button>
+                                                        <!-- INPUT -->
+                                                        <div>
+                                                            <x-input-label value="Upload Gambar" class="text-sm" />
+                                                            <input type="file" name="image"
+                                                                @change="preview = URL.createObjectURL($event.target.files[0])"
+                                                                class="mt-1 block w-full text-sm border-gray-300 rounded-md shadow-sm"
+                                                                required>
 
-                                                        <button type="submit"
-                                                            class="bg-blue-600 text-white px-3 py-1.5 rounded">Simpan</button>
-                                                    </div>
-                                                </form>
+                                                            @error('image')
+                                                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                                            @enderror
+                                                        </div>
+
+                                                        <!-- PREVIEW -->
+                                                        <div x-show="preview">
+                                                            <img :src="preview"
+                                                                class="h-24 rounded border object-cover">
+                                                        </div>
+
+                                                        <!-- ACTION -->
+                                                        <div class="flex justify-end gap-2">
+                                                            <button type="button" @click="showAdd=false"
+                                                                class="bg-gray-400 text-white px-3 py-1.5 rounded">
+                                                                Close
+                                                            </button>
+
+                                                            <button type="submit"
+                                                                class="bg-blue-600 text-white px-3 py-1.5 rounded hover:bg-blue-700">
+                                                                Simpan
+                                                            </button>
+                                                        </div>
+                                                    </form>
+
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -195,47 +213,63 @@
                                     </table>
 
                                     <!-- Modal Edit -->
-                                    <div x-show="show" x-transition
-                                        class="fixed inset-0 bg-black/40 z-50 flex items-start justify-center p-4 overflow-y-auto">
+                                    <div x-data="{ form: { image: null }, preview: null }">
 
-                                        <div class="bg-white rounded-lg shadow-md w-full max-w-md relative">
+                                        <div x-show="show" x-transition
+                                            class="fixed inset-0 bg-black/40 z-50 flex items-start justify-center p-4 overflow-y-auto">
 
-                                            <!-- Header -->
-                                            <div class="flex items-center justify-between p-4 border-b">
-                                                <h2 class="text-base font-semibold">Edit Gambar</h2>
-                                                <button @click="show = false"
-                                                    class="text-gray-400 hover:text-gray-600 text-xl">&times;</button>
-                                            </div>
+                                            <div @click.away="show = false"
+                                                class="bg-white rounded-lg shadow-md w-full max-w-md relative">
 
-                                            <!-- Content -->
-                                            <div class="p-4">
-                                                <form id="editGalleryForm" method="POST" enctype="multipart/form-data"
-                                                    class="space-y-4">
-                                                    @csrf
-                                                    @method('PUT')
+                                                <!-- Header -->
+                                                <div class="flex items-center justify-between p-4 border-b">
+                                                    <h2 class="text-base font-semibold">Edit Gambar</h2>
+                                                    <button @click="show = false"
+                                                        class="text-gray-400 hover:text-gray-600 text-xl">&times;</button>
+                                                </div>
 
-                                                    <!-- Preview Lama -->
-                                                    <div>
-                                                        <x-input-label value="Preview Lama" class="text-sm" />
-                                                        <img :src="form.image" class="h-24 rounded border">
-                                                    </div>
+                                                <!-- Content -->
+                                                <div class="p-4">
 
-                                                    <!-- Upload Baru -->
-                                                    <div>
-                                                        <x-input-label value="Ganti Gambar" class="text-sm" />
-                                                        <input type="file" name="image"
-                                                            @change="form.image = URL.createObjectURL($event.target.files[0])"
-                                                            class="mt-1 block w-full text-sm border-gray-300 rounded-md shadow-sm">
-                                                    </div>
+                                                    <form id="editGalleryForm" method="POST"
+                                                        enctype="multipart/form-data" class="space-y-4">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <!-- UPLOAD BARU -->
+                                                        <div>
+                                                            <x-input-label value="Ganti Gambar" class="text-sm" />
+                                                            <input type="file" name="image"
+                                                                @change="preview = URL.createObjectURL($event.target.files[0])"
+                                                                class="mt-1 block w-full text-sm border-gray-300 rounded-md shadow-sm">
 
-                                                    <div class="flex justify-end gap-2">
-                                                        <button type="button" @click="show=false"
-                                                            class="bg-gray-400 text-white px-3 py-1.5 rounded">Close</button>
+                                                            @error('image')
+                                                                <p class="text-red-500 text-xs mt-1">{{ $message }}
+                                                                </p>
+                                                            @enderror
+                                                        </div>
 
-                                                        <button type="submit"
-                                                            class="bg-blue-600 text-white px-3 py-1.5 rounded">Update</button>
-                                                    </div>
-                                                </form>
+                                                        <!-- PREVIEW BARU -->
+                                                        <div x-show="preview">
+                                                            <x-input-label value="Preview Baru" class="text-sm" />
+                                                            <img :src="preview"
+                                                                class="h-24 rounded border object-cover">
+                                                        </div>
+
+                                                        <!-- ACTION -->
+                                                        <div class="flex justify-end gap-2">
+                                                            <button type="button" @click="show=false"
+                                                                class="bg-gray-400 text-white px-3 py-1.5 rounded">
+                                                                Close
+                                                            </button>
+
+                                                            <button type="submit"
+                                                                class="bg-blue-600 text-white px-3 py-1.5 rounded hover:bg-blue-700">
+                                                                Update
+                                                            </button>
+                                                        </div>
+                                                    </form>
+
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

@@ -5,31 +5,43 @@
             "closeButton": false,
             "debug": false,
             "newestOnTop": false,
-            "progressBar": false,
+            "progressBar": true,
             "positionClass": "toast-top-right",
-            "preventDuplicates": false,
-            "onclick": null,
             "showDuration": "300",
             "hideDuration": "1000",
-            "timeOut": "5000",
-            "extendedTimeOut": "1000",
-            "showEasing": "swing",
-            "hideEasing": "linear",
+            "timeOut": "4000",
             "showMethod": "fadeIn",
             "hideMethod": "fadeOut"
         }
     </script>
 
+    {{-- SUCCESS --}}
     @foreach (['success', 'successedit', 'successeditgambar', 'successdelete'] as $msg)
         @if (Session::has($msg))
             <script>
-                toastr.success('{{ Session::get($msg) }}', '');
+                toastr.success('{{ Session::get($msg) }}');
             </script>
         @endif
     @endforeach
-    @if ($errors->any())
+
+    {{-- ERROR GLOBAL --}}
+    @if (session('error'))
         <script>
-            toastr.error('Gagal Ditambahkan', '');
+            toastr.error('{{ session('error') }}');
+        </script>
+    @endif
+
+    {{-- ERROR STORE (Tambah) --}}
+    @if ($errors->store->any())
+        <script>
+            toastr.error('Gagal menambahkan data');
+        </script>
+    @endif
+
+    {{-- ERROR UPDATE (Edit) --}}
+    @if ($errors->update->any())
+        <script>
+            toastr.error('Gagal mengupdate data');
         </script>
     @endif
 
@@ -67,7 +79,7 @@
 
                                     <!-- Header & Add Button -->
                                     <div class="flex justify-between items-center mb-3">
-                                        <h2 class="font-semibold text-gray-700 text-md">News & Update</h2>
+                                        <h2 class="font-semibold text-gray-700 text-md">Fasilitas LKP Unsada</h2>
                                         <div class="flex gap-1">
                                             <!-- Kembali -->
                                             <!-- Kembali -->
@@ -86,8 +98,9 @@
                                         </div>
                                     </div>
 
-                                    <div x-show="show" x-transition
+                                    <div x-show="show" x-transition x-init="if ({{ $errors->any() || session('error') ? 'true' : 'false' }}) show = true"
                                         class="fixed inset-0 bg-black/40 z-50 flex items-start justify-center p-4 overflow-y-auto">
+                                        >
 
                                         <div
                                             class="bg-white rounded-lg shadow-md w-full max-w-md max-h-screen overflow-y-auto relative">
@@ -111,8 +124,13 @@
                                                     <div>
                                                         <x-input-label value="Gambar Fasilitas" class="text-sm" />
                                                         <input type="file" name="image"
-                                                            class="mt-1 block w-full text-sm border-gray-300 rounded-md shadow-sm"
-                                                            required>
+                                                            class="mt-1 block w-full text-sm border-gray-300 rounded-md shadow-sm">
+
+                                                        @if ($errors->store->has('image'))
+                                                            <p class="text-red-500 text-xs mt-1">
+                                                                {{ $errors->store->first('image') }}
+                                                            </p>
+                                                        @endif
                                                     </div>
 
                                                     <!-- Deskripsi -->
@@ -120,26 +138,33 @@
                                                         <x-input-label value="Deskripsi" class="text-sm" />
                                                         <textarea name="description" rows="4"
                                                             class="block mt-1 w-full text-sm border-gray-300 rounded-md shadow-sm px-2 py-1.5"
-                                                            placeholder="Masukkan deskripsi fasilitas..." required></textarea>
+                                                            placeholder="Masukkan deskripsi fasilitas...">{{ old('description') }}</textarea>
+
+                                                        @if ($errors->store->has('description'))
+                                                            <p class="text-red-500 text-xs mt-1">
+                                                                {{ $errors->store->first('description') }}
+                                                            </p>
+                                                        @endif
                                                     </div>
 
                                                     <!-- Action -->
                                                     <div class="flex justify-end gap-2 pt-2">
                                                         <button type="button" @click="show=false"
-                                                            class="bg-gray-400 hover:bg-gray-500 text-white text-sm px-3 py-1.5 rounded-md transition">
+                                                            class="bg-gray-400 hover:bg-gray-500 text-white text-sm px-3 py-1.5 rounded-md">
                                                             Close
                                                         </button>
 
                                                         <button type="submit"
-                                                            class="bg-blue-600 hover:bg-blue-700 text-white text-sm px-3 py-1.5 rounded-md transition">
+                                                            class="bg-blue-600 hover:bg-blue-700 text-white text-sm px-3 py-1.5 rounded-md">
                                                             Simpan
                                                         </button>
                                                     </div>
                                                 </form>
-                                            </div>
 
+                                            </div>
                                         </div>
                                     </div>
+
                                 </div>
 
                                 <!-- Table News -->
@@ -202,72 +227,99 @@
                                         </tbody>
                                     </table>
 
-                                    <!-- Modal Edit -->
-                                    <div x-show="show" x-transition
+
+                                    <div x-show="show" x-transition x-init="if ({{ $errors->update->any() ? 'true' : 'false' }}) {
+                                        show = true;
+                                    
+                                        $nextTick(() => {
+                                            document.getElementById('editFacilityForm').action =
+                                                '{{ session('edit_id') ? route('admin.facilities.update', session('edit_id')) : '' }}';
+                                        });
+                                    }"
                                         class="fixed inset-0 bg-black/40 z-50 flex items-start justify-center p-4 overflow-y-auto">
 
                                         <div
                                             class="bg-white rounded-lg shadow-md w-full max-w-md max-h-screen overflow-y-auto relative">
 
-                                            <!-- Header -->
+                                            <!-- HEADER -->
                                             <div class="flex items-center justify-between p-4 border-b">
                                                 <h2 class="text-base font-semibold">Edit Fasilitas</h2>
                                                 <button @click="show = false"
-                                                    class="text-gray-400 hover:text-gray-600 text-xl leading-none">
-                                                    &times;
-                                                </button>
+                                                    class="text-gray-400 hover:text-gray-600 text-xl">&times;</button>
                                             </div>
 
-                                            <!-- Content -->
+                                            <!-- CONTENT -->
                                             <div class="p-4">
-                                                <form id="editFacilityForm" method="POST" enctype="multipart/form-data"
-                                                    class="space-y-4">
+
+                                                <!-- ERROR GLOBAL -->
+                                                @if (session('error'))
+                                                    <div class="mb-3 p-3 bg-red-100 text-red-700 rounded text-sm">
+                                                        {{ session('error') }}
+                                                    </div>
+                                                @endif
+
+                                                <!-- ERROR VALIDASI -->
+                                                @if ($errors->update->any())
+                                                    <div class="mb-3 p-3 bg-red-100 text-red-700 rounded text-sm">
+                                                        <ul class="list-disc pl-5">
+                                                            @foreach ($errors->update->all() as $error)
+                                                                <li>{{ $error }}</li>
+                                                            @endforeach
+                                                        </ul>
+                                                    </div>
+                                                @endif
+
+                                                <form id="editFacilityForm"
+                                                    action="{{ session('edit_id') ? route('admin.facilities.update', session('edit_id')) : '' }}"
+                                                    method="POST" enctype="multipart/form-data" class="space-y-4">
                                                     @csrf
                                                     @method('PUT')
 
-                                                    <!-- ID -->
-                                                    <input type="hidden" id="facility_id">
-
-                                                    <!-- Preview Gambar Lama -->
+                                                    <!-- PREVIEW -->
                                                     <div>
-                                                        <x-input-label value="Preview Gambar" class="text-sm" />
+                                                        <x-input-label value="Preview Gambar" />
                                                         <img :src="form.image"
                                                             class="h-24 w-24 object-cover rounded border mt-1">
                                                     </div>
 
-                                                    <!-- Upload Gambar Baru -->
+                                                    <!-- IMAGE -->
                                                     <div>
-                                                        <x-input-label value="Ganti Gambar (Opsional)"
-                                                            class="text-sm" />
+                                                        <x-input-label value="Ganti Gambar (Opsional)" />
                                                         <input type="file" name="image"
-                                                            class="mt-1 block w-full text-sm border-gray-300 rounded-md shadow-sm">
+                                                            class="mt-1 block w-full text-sm border-gray-300 rounded-md">
+
+                                                        @error('image', 'update')
+                                                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                                        @enderror
                                                     </div>
 
-                                                    <!-- Deskripsi -->
+                                                    <!-- DESCRIPTION -->
                                                     <div>
-                                                        <x-input-label value="Deskripsi" class="text-sm" />
+                                                        <x-input-label value="Deskripsi" />
                                                         <textarea id="edit_description" name="description" rows="4"
-                                                            class="block mt-1 w-full text-sm border-gray-300 rounded-md shadow-sm px-2 py-1.5"></textarea>
+                                                            class="block mt-1 w-full text-sm border-gray-300 rounded-md px-2 py-1.5">{{ old('description') }}</textarea>
+
+                                                        @error('description', 'update')
+                                                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                                        @enderror
                                                     </div>
 
-                                                    <!-- Action -->
+                                                    <!-- ACTION -->
                                                     <div class="flex justify-end gap-2 pt-2">
                                                         <button type="button" @click="show=false"
-                                                            class="bg-gray-400 hover:bg-gray-500 text-white text-sm px-3 py-1.5 rounded-md transition">
+                                                            class="bg-gray-400 text-white text-sm px-3 py-1.5 rounded-md">
                                                             Close
                                                         </button>
 
                                                         <button type="submit"
-                                                            class="bg-blue-600 hover:bg-blue-700 text-white text-sm px-3 py-1.5 rounded-md transition">
+                                                            class="bg-blue-600 text-white text-sm px-3 py-1.5 rounded-md">
                                                             Update
                                                         </button>
                                                     </div>
                                                 </form>
                                             </div>
-
                                         </div>
                                     </div>
-
                                     <script>
                                         function modalEditNews() {
                                             return {
@@ -281,17 +333,17 @@
                                                 openModal(data) {
                                                     this.show = true;
 
-                                                    // set data ke form
                                                     this.form.id = data.id;
                                                     this.form.description = data.description;
                                                     this.form.image = data.image;
 
                                                     this.$nextTick(() => {
-                                                        // set action form
                                                         document.getElementById("editFacilityForm").action = "/admin/facilities/" + data.id;
 
-                                                        // set textarea
-                                                        document.getElementById("edit_description").value = data.description;
+                                                        // 🔥 hanya isi jika tidak ada error
+                                                        if (!{{ $errors->update->any() ? 'true' : 'false' }}) {
+                                                            document.getElementById("edit_description").value = data.description ?? '';
+                                                        }
                                                     });
                                                 }
                                             }
