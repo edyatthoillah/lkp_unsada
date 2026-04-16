@@ -29,8 +29,7 @@
 
     </section>
     <!-- Tentang Kami Section Modern -->
-    <section id="about"
-        class="py-24 relative min-h-[100vh] bg-gradient-to-r from-purple-800/20 via-gray-50 to-purple-800/20">
+    <section id="about" class="py-24 bg-gradient-to-r from-purple-800/20 via-gray-50 to-purple-800/20">
         <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-start gap-12">
 
             <!-- Image Kiri -->
@@ -52,7 +51,6 @@
                     </a>
                 </div>
             </div>
-
         </div>
     </section>
 
@@ -72,30 +70,23 @@
             </div>
 
             <!-- Grid 4 Card -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 pb-12">
                 @foreach ($services as $item)
                     <div
                         class="bg-white p-7 rounded-lg shadow-lg hover:shadow-2xl transition duration-300 border border-gray-100 group">
-
                         <div class="flex flex-col items-center text-center">
-
                             <div
                                 class="w-16 h-16 flex items-center justify-center bg-indigo-100 rounded-full shadow-md mb-5 group-hover:bg-indigo-600 transition">
                                 <i
                                     class="{{ $item->icon }} text-indigo-600 text-2xl group-hover:text-white transition"></i>
                             </div>
-
                             <h3 class="text-xl font-bold mb-3 text-gray-800">
                                 {{ $item->name }}
                             </h3>
-
                             <p class="text-gray-600 leading-relaxed text-sm sm:text-base text-center">
                                 {{ $item->description }}
                             </p>
-
                         </div>
-
                     </div>
                 @endforeach
 
@@ -103,46 +94,108 @@
         </div>
     </section>
 
-    <section class=" bg-gradient-to-r from-purple-800/20 via-gray-50 to-purple-800/20 py-20">
-        <div class="max-w-5xl mx-auto text-center px-6">
-            <h2 class="text-3xl sm:text-4xl font-extrabold mb-4 text-gray-800 relative inline-block">
+    <section id="mitra" class="bg-white py-16 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+
+            <!-- Judul -->
+            <div class="mb-10">
+                <h2 class="text-3xl sm:text-4xl font-extrabold mb-4 text-gray-800">
+                    <span class="bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600">
+                         Pengguna Jasa Kami
+                    </span>
+                </h2>
+                <p class="text-gray-600 max-w-2xl mx-auto text-lg">
+                    LKP Universitas Darma Persada
+                </p>
+            </div>
+
+            <!-- Carousel -->
+            <div class="relative w-full overflow-hidden">
+                <div class="flex animate-marquee space-x-10 items-center">
+                    <!-- Loop 2x biar infinite smooth -->
+                    @foreach ($partners->concat($partners) as $item)
+                        <div class="flex flex-col items-center min-w-[120px] group">
+                            <!-- Logo -->
+                            <div
+                                class="bg-gray-50 p-2 rounded-xl shadow hover:shadow-lg transition w-20 h-20 flex items-center justify-center">
+
+                                <img src="{{ asset('storage/' . $item->logo) }}" alt="{{ $item->name }}"
+                                    class="max-h-full object-contain transition duration-300"
+                                    onerror="this.onerror=null;this.src='https://ui-avatars.com/api/?name={{ urlencode($item->name) }}&background=EEF2FF&color=3730A3&size=128';">
+                            </div>
+                            <!-- Nama -->
+                            <p class="mt-2 text-xs text-gray-600 text-center">
+                                {{ $item->name }}
+                            </p>
+
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STYLE ANIMATION -->
+    <style>
+        @keyframes marquee {
+            0% {
+                transform: translateX(0%);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .animate-marquee {
+            display: flex;
+            width: max-content;
+            animation: marquee 50s linear infinite;
+            /* 🔥 ubah di sini */
+        }
+    </style>
+
+    <section class="bg-gradient-to-r from-purple-800/20 via-gray-50 to-purple-800/20 py-20">
+        <div class="max-w-6xl mx-auto text-center px-6">
+
+            <!-- Judul -->
+            <h2 class="text-3xl sm:text-4xl font-extrabold mb-4 text-gray-800">
                 <span class="bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600">
                     Galeri Kegiatan <br>
-                    Lembaga Kursus dan Pelatihan (LKP) Unsada
+                    LKP Unsada
                 </span>
             </h2>
 
-            <p class="text-gray-600 max-w-2xl mx-auto text-lg sm:text-xl leading-relaxed">
-                Galeri kegiatan LKP UNSADA – Intip momen belajar seru peserta kami.
+            <p class="text-gray-600 max-w-2xl mx-auto text-lg sm:text-xl mb-12">
+                Intip momen belajar seru peserta kami.
             </p>
 
-            <div class="relative h-[320px] flex items-center justify-center overflow-hidden">
-
-                <!-- IMAGE LEFT -->
+            <!-- Wrapper -->
+            <div id="galleryWrapper"
+                class="relative h-[260px] sm:h-[320px] flex items-center justify-center overflow-hidden">
+                <!-- LEFT -->
                 <img id="imgLeft"
-                    class="absolute w-[40%] h-[240px] object-cover rounded-lg opacity-50 scale-90 -translate-x-[70%] transition-all duration-900 ease-in-out">
+                    class="absolute w-[35%] h-[200px] sm:h-[240px] object-cover rounded-xl opacity-40 scale-90 -translate-x-[80%]  transition-all duration-700 ease-in-out">
 
-                <!-- IMAGE CENTER -->
+                <!-- CENTER -->
                 <img id="imgCenter"
-                    class="absolute w-[55%] h-[300px] object-cover rounded-lg shadow-xl z-10 transition-all duration-900 ease-in-out">
+                    class="absolute w-[60%] h-[240px] sm:h-[300px] object-cover rounded-xl shadow-2xl z-10 transition-all duration-700 ease-in-out">
 
-                <!-- IMAGE RIGHT -->
+                <!-- RIGHT -->
                 <img id="imgRight"
-                    class="absolute w-[40%] h-[240px] object-cover rounded-lg opacity-50 scale-90 translate-x-[70%] transition-all duration-900 ease-in-out">
+                    class="absolute w-[35%] h-[200px] sm:h-[240px] object-cover rounded-xl opacity-40 scale-90 translate-x-[80%]  transition-all duration-700 ease-in-out">
 
                 <!-- BUTTON -->
                 <button id="prevGallery"
-                    class="absolute left-0 bg-white shadow w-10 h-10 rounded-full hover:bg-gray-100">
+                    class="absolute left-2 sm:left-0 bg-white/80 backdrop-blur shadow w-10 h-10 rounded-full hover:bg-white transition">
                     ‹
                 </button>
 
                 <button id="nextGallery"
-                    class="absolute right-0 bg-white shadow w-10 h-10 rounded-full hover:bg-gray-100">
+                    class="absolute right-2 sm:right-0 bg-white/80 backdrop-blur shadow w-10 h-10 rounded-full hover:bg-white transition">
                     ›
                 </button>
-
             </div>
-
         </div>
     </section>
 
@@ -160,13 +213,20 @@
 
             const nextBtn = document.getElementById("nextGallery")
             const prevBtn = document.getElementById("prevGallery")
+            const wrapper = document.getElementById("galleryWrapper")
+
+            if (!images.length) return;
 
             function updateGallery() {
-
-                if (images.length === 0) return;
-
                 const prev = (index - 1 + images.length) % images.length
                 const next = (index + 1) % images.length
+
+                // preload biar tidak flicker
+                const imgPrev = new Image()
+                const imgNext = new Image()
+
+                imgPrev.src = images[prev]
+                imgNext.src = images[next]
 
                 left.src = images[prev]
                 center.src = images[index]
@@ -183,25 +243,35 @@
                 updateGallery()
             }
 
-            nextBtn.addEventListener("click", nextSlide)
-            prevBtn.addEventListener("click", prevSlide)
+            nextBtn.addEventListener("click", () => {
+                nextSlide()
+                resetAutoSlide()
+            })
+
+            prevBtn.addEventListener("click", () => {
+                prevSlide()
+                resetAutoSlide()
+            })
 
             function startAutoSlide() {
-                autoSlide = setInterval(nextSlide, 3000)
+                autoSlide = setInterval(nextSlide, 4000) // 🔥 lebih santai
             }
 
             function stopAutoSlide() {
                 clearInterval(autoSlide)
             }
 
-            const gallery = document.querySelector(".relative")
+            function resetAutoSlide() {
+                stopAutoSlide()
+                startAutoSlide()
+            }
 
-            gallery.addEventListener("mouseenter", stopAutoSlide)
-            gallery.addEventListener("mouseleave", startAutoSlide)
+            // pause saat hover
+            wrapper.addEventListener("mouseenter", stopAutoSlide)
+            wrapper.addEventListener("mouseleave", startAutoSlide)
 
             updateGallery()
             startAutoSlide()
-
         })
     </script>
 
@@ -211,16 +281,12 @@
             <h2 class="text-4xl font-bold text-white mb-4">
                 Apa Kata Mereka <br> Tentang LKP Unsada ?
             </h2>
-
             <p class="text-blue-100 max-w-3xl mx-auto mb-16">
                 Dengarkan pengalaman para peserta yang telah mengikuti pelatihan di LPK UNSADA.
             </p>
-
             <div class="overflow-hidden">
-
                 <!-- SLIDER -->
                 <div id="testimonialSlider" class="flex transition-transform duration-500">
-
                     @foreach ($testimonials as $item)
                         <div class="basis-full sm:basis-1/2 lg:basis-1/3 flex-shrink-0 px-4">
 
@@ -231,21 +297,17 @@
                                 <div class="text-red-400 text-5xl mb-4 leading-none">
                                     “
                                 </div>
-
                                 <!-- Message -->
                                 <p class="text-gray-600 text-sm leading-relaxed text-justify mb-8">
                                     {{ $item->message }}
                                 </p>
-
                                 <!-- Divider -->
                                 <div class="border-t border-gray-100 mb-4"></div>
 
                                 <!-- User -->
                                 <div class="flex justify-between gap-3">
-
                                     {{-- <img src="{{ $item->photo ? asset('storage/' . $item->photo) : 'https://i.pravatar.cc/60' }}"
                                         class="w-14 h-14 rounded-full object-cover border"> --}}
-
 
                                     <p class="font-semibold text-gray-800">
                                         {{ $item->name }}
@@ -263,7 +325,6 @@
 
             <!-- BUTTON -->
             <div class="flex justify-center mt-10 gap-4">
-
                 <button id="prevBtn"
                     class="w-12 h-12 rounded-full border border-purple-600 text-purple-500 flex items-center justify-center hover:bg-purple-600 hover:text-white">
                     ‹
@@ -273,15 +334,50 @@
                     class="w-12 h-12 rounded-full bg-purple-500 text-white flex items-center justify-center hover:bg-purple-600">
                     ›
                 </button>
-
             </div>
-
         </div>
     </section>
+    <script>
+        const slider = document.getElementById("testimonialSlider")
+        const next = document.getElementById("nextBtn")
+        const prev = document.getElementById("prevBtn")
+
+        let index = 0
+
+        function getCardsPerView() {
+            if (window.innerWidth < 640) return 1
+            if (window.innerWidth < 1024) return 2
+            return 3
+        }
+
+        function updateSlider() {
+            const cardsPerView = getCardsPerView()
+            const move = 100 / cardsPerView
+            slider.style.transform = `translateX(-${index * move}%)`
+        }
+
+        next.onclick = () => {
+            const cards = slider.children.length
+            const cardsPerView = getCardsPerView()
+
+            if (index < cards - cardsPerView) {
+                index++
+                updateSlider()
+            }
+        }
+
+        prev.onclick = () => {
+            if (index > 0) {
+                index--
+                updateSlider()
+            }
+        }
+
+        window.addEventListener("resize", updateSlider)
+    </script>
 
     <section class="bg-gradient-to-r from-purple-800/20 via-gray-50 to-purple-800/20 py-20">
         <div class="max-w-7xl mx-auto px-6">
-
             <!-- Heading -->
             <div class="text-center mb-14">
                 <h2 class="text-3xl font-bold text-gray-900">
@@ -295,25 +391,38 @@
                 <div class="lg:col-span-2 overflow-x-auto scrollbar-hide scroll-smooth">
                     <div class="grid grid-flow-col grid-rows-1 auto-cols-[48%] gap-8 min-w-full snap-x snap-mandatory">
                         @foreach ($news as $item)
-                            <!-- Card -->
-                            <div class="bg-white rounded-lg shadow-sm overflow-hidden snap-start">
-                                <img src="{{ asset('storage/' . $item->thumbnail) }}" alt="{{ $item->news_title }}"
-                                    class="w-full h-48 object-cover">
-
-                                <div class="p-6">
-                                    <div class="flex items-center text-gray-400 text-sm mb-3">
-                                        <span>🕒</span>
-                                        <span class="ml-2">{{ $item->created_at->format('d-m-Y') }}</span>
+                            <div
+                                class="bg-white rounded-2xl shadow-md overflow-hidden snap-start 
+            hover:shadow-xl hover:-translate-y-2 transition duration-300 group border border-gray-100">
+                                <!-- Thumbnail -->
+                                <div class="relative overflow-hidden">
+                                    <img src="{{ asset('storage/' . $item->thumbnail) }}"
+                                        alt="{{ $item->news_title }}"
+                                        class="w-full h-48 object-cover group-hover:scale-110 transition duration-500">
+                                    <!-- Overlay Gradient -->
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+                                    <!-- Date Badge -->
+                                    <div
+                                        class="absolute bottom-3 left-3 bg-white/90 backdrop-blur px-3 py-1 text-xs rounded-full shadow text-gray-700">
+                                        {{ $item->created_at->format('d M Y') }}
                                     </div>
-                                    <h3 class="font-semibold text-gray-900 mb-3">
+                                </div>
+                                <!-- Content -->
+                                <div class="p-5">
+                                    <!-- Title -->
+                                    <h3
+                                        class="font-semibold text-gray-900 mb-2 group-hover:text-indigo-600 transition line-clamp-2">
                                         {{ $item->news_title }}
                                     </h3>
-                                    <p class="text-gray-500 text-sm mb-4">
-                                        {{ Str::limit(strip_tags(html_entity_decode($item->news_content)), 120) }}
+                                    <!-- Description -->
+                                    <p class="text-gray-500 text-sm mb-4 line-clamp-3">
+                                        {{ Str::limit(strip_tags(html_entity_decode($item->news_content)), 250) }}
                                     </p>
+                                    <!-- Read More -->
                                     <a href="{{ route('news.show', $item->slug) }}"
-                                        class="text-red-500 text-sm font-medium">
-                                        Baca Selengkapnya →
+                                        class="inline-flex items-center gap-1 text-indigo-600 text-sm font-medium hover:gap-2 transition">
+                                        Baca Selengkapnya
+                                        <span class="transition">→</span>
                                     </a>
                                 </div>
                             </div>
@@ -321,42 +430,46 @@
                     </div>
                 </div>
                 <!-- SIDEBAR WRAPPER -->
-                <div class="flex flex-col h-[500px]">
-
+                <div class="flex flex-col h-[430px]">
                     <!-- LIST BLOG (SCROLL) -->
-                    <div class="space-y-6 overflow-y-auto pr-2 scrollbar-hide scroll-smooth flex-1">
-
+                    <div class="space-y-3 overflow-y-auto pr-2 scrollbar-hide scroll-smooth flex-1">
                         <!-- Item -->
                         @foreach ($news as $item)
-                            <a href="{{ route('news.show', $item->slug) }}">
-                                <div class="flex gap-4 mb-3 bg-white rounded-lg">
-                                    <img src="{{ asset('storage/' . $item->thumbnail) }}"
-                                        alt="{{ $item->news_title }}" class="w-24 h-20 object-cover rounded-lg">
-
-                                    <div>
-                                        <p class="text-xs text-gray-400 mb-1">{{ $item->created_at->format('d-m-Y') }}
+                            <a href="{{ route('news.show', $item->slug) }}" class="group">
+                                <div
+                                    class="flex gap-4 mb-2 p-1 bg-white rounded-xl 
+                hover:bg-gray-50 hover:shadow-md transition duration-300 border border-gray-100">
+                                    <!-- Thumbnail -->
+                                    <div class="overflow-hidden rounded-lg">
+                                        <img src="{{ asset('storage/' . $item->thumbnail) }}"
+                                            alt="{{ $item->news_title }}"
+                                            class="w-24 h-20 object-cover group-hover:scale-110 transition duration-300">
+                                    </div>
+                                    <!-- Content -->
+                                    <div class="flex flex-col justify-between">
+                                        <!-- Date -->
+                                        <p class="text-xs text-gray-400 mb-1">
+                                            {{ $item->created_at->format('d M Y') }}
                                         </p>
-                                        <h4 class="text-sm font-semibold text-gray-800">
-                                            {{ Str::limit(strip_tags(html_entity_decode($item->news_content)), 90) }}
+                                        <!-- Title -->
+                                        <h4
+                                            class="text-sm font-semibold text-gray-800 leading-snug 
+                       group-hover:text-indigo-600 transition">
+                                            {{ Str::limit(strip_tags(html_entity_decode($item->news_content)), 100) }}
                                         </h4>
                                     </div>
                                 </div>
                             </a>
                         @endforeach
                     </div>
-
                     <!-- LINK BAWAH -->
                     <div class="pt-4 text-right">
                         <a href="{{ route('blogs') }}" class="text-red-500 text-sm font-medium hover:underline">
                             Lihat berita lainnya →
                         </a>
                     </div>
-
                 </div>
-
-
             </div>
-
         </div>
     </section>
 
@@ -428,9 +541,7 @@
             </div>
         </div>
     </section>
-
     @include('layouts.landing-footer')
-
     <!-- Floating WhatsApp Button -->
     <a href="https://wa.me/{{ $landing->whatsapp }}?text=Saya%20ingin%20informasi%20LKP%20Universitas%20Darma%20Persada"
         target="_blank"
@@ -438,108 +549,7 @@
         title="Chat via WhatsApp">
         <i class="fab fa-whatsapp text-white text-2xl"></i>
     </a>
-    <script>
-        function heroSlider() {
-            return {
-                current: 0,
-                images: [
-                    "{{ asset('images/landingpage/hero1.png') }}",
-                    "{{ asset('images/landingpage/hero2.png') }}",
-                    "{{ asset('images/landingpage/hero3.png') }}"
-                ],
-                start() {
-                    setInterval(() => {
-                        this.current = (this.current + 1) % this.images.length
-                    }, 5000) // ganti gambar tiap 5 detik
-                }
-            }
-        }
-    </script>
-    <script>
-        const slider = document.getElementById("testimonialSlider")
-        const next = document.getElementById("nextBtn")
-        const prev = document.getElementById("prevBtn")
-
-        let index = 0
-
-        function getCardsPerView() {
-            if (window.innerWidth < 640) return 1
-            if (window.innerWidth < 1024) return 2
-            return 3
-        }
-
-        function updateSlider() {
-            const cardsPerView = getCardsPerView()
-            const move = 100 / cardsPerView
-            slider.style.transform = `translateX(-${index * move}%)`
-        }
-
-        next.onclick = () => {
-            const cards = slider.children.length
-            const cardsPerView = getCardsPerView()
-
-            if (index < cards - cardsPerView) {
-                index++
-                updateSlider()
-            }
-        }
-
-        prev.onclick = () => {
-            if (index > 0) {
-                index--
-                updateSlider()
-            }
-        }
-
-        window.addEventListener("resize", updateSlider)
-    </script>
     </body>
     </div>
-
-    <style>
-        .sakura {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background-image: url('images/landingpage/sakura.png');
-            /* gambar sakura kecil */
-            background-size: contain;
-            background-repeat: no-repeat;
-            animation-name: fall;
-            animation-timing-function: linear;
-            animation-iteration-count: infinite;
-        }
-
-        @keyframes fall {
-            0% {
-                transform: translateY(-50px) rotate(0deg);
-                opacity: 1;
-            }
-
-            100% {
-                transform: translateY(100vh) rotate(360deg);
-                opacity: 0.8;
-            }
-        }
-    </style>
-
-    <script>
-        const container = document.getElementById('sakura-container');
-        const numberOfSakura = 20; // bisa diubah sesuai banyak daun
-
-        for (let i = 0; i < numberOfSakura; i++) {
-            const leaf = document.createElement('div');
-            leaf.classList.add('sakura');
-
-            // posisi awal acak
-            leaf.style.left = Math.random() * 100 + 'vw';
-            leaf.style.animationDuration = (5 + Math.random() * 5) + 's'; // 5-10 detik
-            leaf.style.animationDelay = Math.random() * 5 + 's';
-            leaf.style.width = (15 + Math.random() * 20) + 'px';
-            leaf.style.height = leaf.style.width;
-
-            container.appendChild(leaf);
-        }
-    </script>
 
     </html>

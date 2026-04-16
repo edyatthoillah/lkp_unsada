@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Gallery;
 use App\Models\LandingPage;
 use App\Models\News;
+use App\Models\Partner;
 use App\Models\Service;
 use App\Models\Testimonial;
 use Illuminate\Http\Request;
@@ -16,12 +17,13 @@ class LandingPageController extends Controller
     public function index()
     {
         $landing = LandingPage::first();
-        $testimonials = Testimonial::latest()->take(5)->get();
+        $testimonials = Testimonial::latest()->get();
         $news = News::latest()->paginate(10);
         $galleries = Gallery::latest()->get();
         $services = Service::get();
+        $partners = Partner::latest()->get();
 
-        return view('welcome', compact('news', 'testimonials', 'landing', 'galleries', 'services'));
+        return view('welcome', compact('news', 'testimonials', 'landing', 'galleries', 'services', 'partners'));
     }
 
     public function adminindex()

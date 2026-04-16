@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\FacilitiesController;
 use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\LandingPageController;
 use App\Http\Controllers\Admin\NewsController;
+use App\Http\Controllers\Admin\PartnerController;
 use App\Http\Controllers\Admin\ProgramController;
 use App\Http\Controllers\Admin\ServicesController;
 use App\Http\Controllers\Admin\TestimonialController;
@@ -56,6 +57,7 @@ Route::middleware(['auth', 'role:admin', 'verified'])
         Route::resource('facilities', FacilitiesController::class);
         Route::resource('galery', GalleryController::class);
         Route::resource('services', ServicesController::class);
+        Route::resource('partners', PartnerController::class);
         Route::post('/detail-program', [DetailProgramController::class, 'store'])->name('detail.store');
         Route::put('/detail-program/{id}', [DetailProgramController::class, 'update'])->name('detail.update');
         Route::delete('/detail-program/{id}', [DetailProgramController::class, 'destroy'])->name('detail.delete');
