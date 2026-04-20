@@ -243,15 +243,16 @@
                                                         </div>
 
                                                         <div class="mt-3">
-    <label class="text-sm font-medium">Ganti Logo</label>
-    <input type="file" name="logo"
-        class="w-full border rounded-md mt-1 text-sm px-2 py-1.5 
+                                                            <label class="text-sm font-medium">Ganti Logo</label>
+                                                            <input type="file" name="logo"
+                                                                class="w-full border rounded-md mt-1 text-sm px-2 py-1.5 
         @error('logo') border-red-500 @enderror">
 
-    @error('logo')
-        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-    @enderror
-</div>
+                                                            @error('logo')
+                                                                <p class="text-red-500 text-xs mt-1">{{ $message }}
+                                                                </p>
+                                                            @enderror
+                                                        </div>
 
                                                         <div class="flex justify-end gap-2 pt-3">
                                                             <button type="button" @click="show=false"
