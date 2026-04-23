@@ -151,7 +151,6 @@
             display: flex;
             width: max-content;
             animation: marquee 50s linear infinite;
-            /* 🔥 ubah di sini */
         }
     </style>
 
